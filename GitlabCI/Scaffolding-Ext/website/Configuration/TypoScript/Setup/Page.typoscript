@@ -30,7 +30,6 @@ page {
     }
 
     includeCSS {
-        10 = EXT:website/Resources/Public/Stylesheets/Main.min.css
 
     }
 
