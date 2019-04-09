@@ -1,0 +1,9 @@
+########################################################################################################################################################################################################
+### POWERMAIL - SETUP ###
+########################################################################################################################################################################################################
+plugin.tx_powermail {
+    settings {
+        generalReceiverSetFromEmail = {$plugin.tx_powermail.settings.generalReceiverSetFromEmail}
+        generalReceiverSetFromName = {$plugin.tx_powermail.settings.generalReceiverSetFromName}
+    }
+}

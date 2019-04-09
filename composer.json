@@ -1,0 +1,29 @@
+{
+    "name": "dpool/base",
+	"type": "typo3-cms-extension",
+	"description": "Dpool base extension, based on extbase & fluid for TYPO3 CMS",
+
+	"require": {
+		"php": "7.2",
+		"helhum/dotenv-connector": "^2",
+		"helhum/typo3-console": "^5"
+	},
+	"autoload": {
+		"psr-4": {
+			"Dpool\\Base\\": "Classes"
+		}
+	},
+	"extra": {
+
+	},
+	"replace": {
+		"base": "self.version",
+		"typo3-ter/base": "self.version"
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"mkdir -p .Build/public/typo3conf/ext/",
+			"[ -L .Build/public/typo3conf/ext/base ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/base"
+		]
+	}
+}

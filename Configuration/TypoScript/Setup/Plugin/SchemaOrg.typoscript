@@ -1,0 +1,41 @@
+plugin.tx_schemaorg {
+    settings {
+        page {
+            # context is not required
+            # Find other types on:
+            # http://schema.org/LocalBusiness
+            type = Organization
+            name = {$base.company.name}
+            url = {$base.baseURL}
+            telephone = {$base.company.telephone}
+            image {
+                type = ImageObject
+                url = {$base.company.logo}
+                caption = {$base.company.name}
+            }
+            address {
+                type = PostalAddress
+                streetAddress = {$base.company.address.streetAddress}
+                addressLocality = {$base.company.address.addressLocality}
+                postalCode = {$base.company.address.postalCode}
+            }
+            # Contact
+            contactPoint {
+                type = ContactPoint
+                telephone = {$base.company.telephone}
+                # contact types for phone numbers:
+                # https://developers.google.com/search/docs/data-types/corporate-contacts
+                contactType = customer service
+            }
+            # social Media comma seperated
+            sameAs {
+                # Simply add multiple pages divided by comma
+#                ARRAY = https://twitter.com/codingms,https://www.instagram.com/codingms/
+                ARRAY = {$base.socialMedia.all}
+            }
+
+            geo >
+            openingHoursSpecification >
+        }
+    }
+}

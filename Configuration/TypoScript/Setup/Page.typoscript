@@ -1,0 +1,57 @@
+page = PAGE
+page {
+    typeNum = 0
+
+    headerData {
+
+    }
+
+    cssInline {
+
+    }
+
+    jsInline {
+
+    }
+
+    includeCSSLibs {
+
+    }
+
+    includeCSS {
+        10 = EXT:dpool_base/Resources/Public/Stylesheets/Main.min.css
+
+    }
+
+    includeJSFooterlibs {
+
+    }
+
+    meta {
+        viewport {
+            value = width=device-width,initial-scale=1,user-scalable=no
+        }
+    }
+    1 < plugin.tx_googletagmanagerdatalayer_init
+
+
+    10 = FLUIDTEMPLATE
+    10 {
+        templateName = Default
+        layoutRootPaths{
+            10 = EXT:dpool_base/Resources/Private/Templates/Page/Layouts
+        }
+        templateRootPaths {
+            10 = EXT:dpool_base/Resources/Private/Templates/Page/Templates
+        }
+        partialRootPaths{
+            10 = EXT:dpool_base/Resources/Private/Templates/Page/Partials
+        }
+        settings {
+
+        }
+    }
+
+    999 < plugin.tx_googletagmanagerdatalayer
+    3000 < plugin.tx_googletagmanager
+}

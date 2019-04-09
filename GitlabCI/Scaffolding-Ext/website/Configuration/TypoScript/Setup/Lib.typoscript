@@ -1,0 +1,10 @@
+########################################################################################################################################################################################################
+### SEARCHBOX: KE_SEARCH ###
+########################################################################################################################################################################################################
+lib.ke_search_searchbox = TEXT
+lib.ke_search_searchbox.value (
+<form method="get" id="form_kesearch_searchfield" name="form_kesearch_searchfield" action="/search/">
+  <input type="text" id="ke_search_searchfield_sword" name="tx_kesearch_pi1[sword]" placeholder="Your search phrase" />
+  <input type="submit" id="ke_search_searchfield_submit" alt="Find" />
+</form>
+)

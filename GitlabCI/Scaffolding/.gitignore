@@ -1,0 +1,17 @@
+.idea
+._*
+.DS*
+.env
+.installed
+
+node_modules
+
+var/*
+vendor/*
+
+public/*
+!public/typo3conf
+public/typo3conf/*
+!public/typo3conf/ext
+public/typo3conf/ext/*
+!public/typo3conf/ext/website
