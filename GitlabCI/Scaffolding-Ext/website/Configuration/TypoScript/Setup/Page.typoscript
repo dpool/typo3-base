@@ -7,7 +7,7 @@ page {
         ### Render content of Inline.min.css
         11 = COA
         11 {
-            wrap = <style type="text/css">huhu|</style>
+            wrap = <style type="text/css">|</style>
             1 = USER
             1 {
                 userFunc = Dpool\Website\UserFunc\InlineAssetsRenderer->getInlineCss
@@ -59,7 +59,7 @@ page {
             10 = EXT:website/Resources/Private/Templates/Page/Partials
         }
         settings {
-
+            deferredCSSFile = {$website.deferredCSSFile}
         }
     }
 
