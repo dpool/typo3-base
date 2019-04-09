@@ -3,8 +3,16 @@
 .DS*
 .env
 .installed
+Gulpfile.js
+package-lock.json
+package.json
+FIRST_INSTALL
+git-pull.sh
 
 node_modules
+gitlab-ci-scripts
+Gulp
+typo3-gitlab-ci
 
 var/*
 vendor/*
@@ -15,3 +23,4 @@ public/typo3conf/*
 !public/typo3conf/ext
 public/typo3conf/ext/*
 !public/typo3conf/ext/website
+!public/typo3conf/ext/dpool-base
