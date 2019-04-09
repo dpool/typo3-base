@@ -15,21 +15,20 @@ module.exports = {
         // --> add the files of other extensions/modules here
     ],
     cssInputFiles: [
-        './public/typo3conf/ext/website/Resources/Private/Scss/Include.scss'
-        // --> add the files of other extensions/modules here
+        './public/typo3conf/ext/website/Resources/Private/Scss/Full.scss',
+        './public/typo3conf/ext/website/Resources/Private/Scss/Inline.scss',
+        './public/typo3conf/ext/website/Resources/Private/Scss/Defer.scss'
     ],
     cssOutputDist: 'public/typo3conf/ext/website/Resources/Public/Stylesheets',
-    cssOutputFile: 'Main.css',
-    cssOutputFileMin: 'Main.min.css',
     sassOptions: {
         errLogToConsole: true,
         outputStyle: 'expanded'
     },
     autoprefixerOptions: {
-         browsers: [
-             'last 2 versions',
-             '> 5%'
-         ],
+        browsers: [
+            'last 2 versions',
+            '> 5%'
+        ],
         cascade: false
     },
 
@@ -39,12 +38,11 @@ module.exports = {
     // ###########################################################################################
 
     jsInputFiles: [
-    './public/typo3conf/ext/website/Resources/Private/JavaScript/**/*.js'
-    // --> add the files of other extensions/modules here
+        './public/typo3conf/ext/website/Resources/Private/JavaScript/**/*.js'
+        // --> add the files of other extensions/modules here
     ],
 
     jsOutputDist: 'public/typo3conf/ext/website/Resources/Public/JavaScript',
     jsOutputFile: 'Main.js',
     jsOutputFileMin: 'Main.min.js'
-
 };

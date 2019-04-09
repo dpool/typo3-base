@@ -4,7 +4,18 @@ page {
 
     headerData {
 
+        ### Render content of Inline.min.css
+        11 = COA
+        11 {
+            wrap = <style type="text/css">|</style>
+            1 = USER
+            1 {
+                userFunc = Dpool\Website\UserFunc\InlineAssetsRenderer->getInlineCss
+                userFunc.file = Resources/Public/Styles/Inline.min.css
+            }
+        }
     }
+
 
     cssInline {
 

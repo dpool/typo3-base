@@ -27,9 +27,10 @@ gulp.task('styles', function () {
         .pipe(sourcemaps.init())
         .pipe(sass(config.sassOptions).on('error', sass.logError))
         .pipe(autoprefixer(config.autoprefixerOptions))
-        .pipe(concat(config.cssOutputFile))
         .pipe(gulp.dest(config.cssOutputDist))
-        .pipe(rename(config.cssOutputFileMin))
+        .pipe(rename({
+            suffix: '.min'
+        }))
         .pipe(cleanCSS())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(config.cssOutputDist));
