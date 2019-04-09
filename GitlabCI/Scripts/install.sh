@@ -10,6 +10,9 @@ if [ -f .installed ]; then
     cp public/typo3conf/ext/base/GitlabCI/Gulp/Gulpfile.js Gulpfile.js
     cp public/typo3conf/ext/base/GitlabCI/Gulp/package.json package.json
 
+    ## copy the git-pull.sh file to the project root directory
+    cp public/typo3conf/ext/base/GitlabCI/Scaffolding/git-pull.sh git-pull.sh
+
 else
     ## make sure that standard folder is available
     [ -d gitlab-ci-scripts ] || mkdir gitlab-ci-scripts
@@ -28,6 +31,9 @@ else
     ## copy gulp setup
     cp public/typo3conf/ext/base/GitlabCI/Gulp/Gulpfile.js Gulpfile.js
     cp public/typo3conf/ext/base/GitlabCI/Gulp/package.json package.json
+
+    ## copy the git-pull.sh file to the project root directory
+    cp public/typo3conf/ext/base/GitlabCI/Scaffolding/git-pull.sh git-pull.sh
 
     ## copy empty files for customising of CI/CD processes in an individual project
     cp public/typo3conf/ext/base/GitlabCI/Scaffolding/after-composer.sh gitlab-ci-scripts/after-composer.sh
