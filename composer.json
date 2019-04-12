@@ -1,5 +1,5 @@
 {
-    "name": "dpool/base",
+    "name": "dpool/typo3-base",
 	"type": "typo3-cms-extension",
 	"description": "Dpool base extension, based on extbase & fluid for TYPO3 CMS",
 
