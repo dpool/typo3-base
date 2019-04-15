@@ -38,7 +38,7 @@ page {
     10 {
         templateName = Default
         layoutRootPaths{
-            10 = EXT:git stabase/Resources/Private/Templates/Page/Layouts
+            10 = EXT:base/Resources/Private/Templates/Page/Layouts
         }
         templateRootPaths {
             10 = EXT:base/Resources/Private/Templates/Page/Templates
