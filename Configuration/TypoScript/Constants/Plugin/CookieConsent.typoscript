@@ -1,26 +1,8 @@
-plugin.tx_cookieconsent.settings {
-    # PID to Data Protection
-    url = {$website.pid.dataPrivacy}
-    # Layout
-    theme = {$base.cookieConsent.theme}
-    # Position
-    position = {$base.cookieConsent.position}
-    # dismiss on scroll (in PX)
-    dismissOnScroll =
-    # Type (info, opt-out)
-    type = info
-    palette {
-        popup {
-            # Bar: Background color
-            background = {$base.cookieConsent.popup.backgroundColor}
-            # Bar: text color
-            text = {$base.cookieConsent.popup.textColor}
-        }
-        button {
-            # Button: Background color
-            background = {$base.cookieConsent.button.backgroundColor}
-            # Button: text color
-            text = {$base.cookieConsent.button.textColor}
-        }
-    }
-}
+plugin.tx_cookieconsent.settings.url =
+plugin.tx_cookieconsent.settings.theme = block
+plugin.tx_cookieconsent.settings.position = bottom
+plugin.tx_cookieconsent.settings.type =
+plugin.tx_cookieconsent.settings.palette.popup.background = #000000
+plugin.tx_cookieconsent.settings.palette.popup.text = #FFFFFF
+plugin.tx_cookieconsent.settings.palette.button.background = #FFFFFF
+plugin.tx_cookieconsent.settings.palette.button.text = #000000
