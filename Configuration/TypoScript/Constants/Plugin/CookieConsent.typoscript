@@ -1,3 +1,7 @@
+plugin.tx_cookieconsent.view.templateRootPath = EXT:website/Resources/Private/Templates/Plugins/dp_cookieconsent/Layouts/
+plugin.tx_cookieconsent.view.partialRootPath = EXT:website/Resources/Private/Templates/Plugins/dp_cookieconsent/Layouts/
+plugin.tx_cookieconsent.view.layoutRootPath = EXT:website/Resources/Private/Templates/Plugins/dp_cookieconsent/Layouts/
+
 plugin.tx_cookieconsent.settings.url =
 plugin.tx_cookieconsent.settings.theme = block
 plugin.tx_cookieconsent.settings.position = bottom
