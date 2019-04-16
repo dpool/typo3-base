@@ -10,7 +10,7 @@ page {
             wrap = <style type="text/css">|</style>
             1 = USER
             1 {
-                userFunc = Dpool\Website\UserFunc\InlineAssetsRenderer->getInlineCss
+                userFunc = Dpool\Website\UserFunctions\InlineAssetsRenderer->getInlineCss
                 userFunc.file = Resources/Public/Styles/Inline.min.css
             }
         }
