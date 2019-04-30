@@ -23,3 +23,5 @@ public/typo3conf/*
 !public/typo3conf/ext
 public/typo3conf/ext/*
 !public/typo3conf/ext/website
+public/typo3conf/ext/website/Resources/Public/JavaScript/*
+public/typo3conf/ext/website/Resources/Public/Stylesheets/*

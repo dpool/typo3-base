@@ -15,9 +15,8 @@ module.exports = {
         // --> add the files of other extensions/modules here
     ],
     cssInputFiles: [
-        './public/typo3conf/ext/website/Resources/Private/Scss/Full.scss',
-        './public/typo3conf/ext/website/Resources/Private/Scss/Inline.scss',
-        './public/typo3conf/ext/website/Resources/Private/Scss/Defer.scss'
+        './public/typo3conf/ext/website/Resources/Private/Scss/**/*.scss'
+
     ],
     cssOutputDist: 'public/typo3conf/ext/website/Resources/Public/Stylesheets',
     sassOptions: {
@@ -38,8 +37,8 @@ module.exports = {
     // ###########################################################################################
 
     jsInputFiles: [
-        './public/typo3conf/ext/website/Resources/Private/JavaScript/**/*.js'
         // --> add the files of other extensions/modules here
+        './public/typo3conf/ext/website/Resources/Private/JavaScript/**/*.js'
     ],
 
     jsOutputDist: 'public/typo3conf/ext/website/Resources/Public/JavaScript',
