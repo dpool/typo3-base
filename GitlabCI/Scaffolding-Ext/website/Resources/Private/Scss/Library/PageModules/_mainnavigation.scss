@@ -1,0 +1,179 @@
+body.mainnav-mobile-open{
+  .overlay{
+    position:fixed;
+    background-color: $color--black;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    opacity:1;
+    transition: opacity 1s ease-in-out;
+    z-index:-1
+  }
+
+  .mainnavigation{
+
+    .navicon {
+
+      &__line {
+
+        &.navicon__1 {
+          top: 6px;
+          width: 0%;
+          left: 50%;
+        }
+
+        &.navicon__2 {
+          transform: rotate(45deg);
+        }
+
+        &.navicon__3 {
+          transform: rotate(-45deg);
+        }
+
+        &.navicon__4 {
+          top: 6px;
+          width: 0%;
+          left: 50%;
+        }
+      }
+    }
+  }
+}
+
+.mainnavigation{
+  z-index:9;
+  display:block;
+
+  .icon-search, .icon-cancel{
+    cursor:pointer;
+  }
+
+  .header-logo-container{
+    top: 0;
+    text-align: center;
+    z-index: -1;
+    width:100%;
+
+    .header-logo{
+      max-height: $headerHeight;
+    }
+  }
+
+  .navbar-toggler{
+    padding:20px 0;
+    border:none;
+  }
+
+  .navbar-collapse{
+    background-color:white;
+    margin-left:- floor(($grid-gutter-width / 2));
+    margin-right:- floor(($grid-gutter-width / 2));
+    padding:0 floor(($grid-gutter-width / 2));
+  }
+
+  .navicon{
+    display: inline-block;
+    width: 18px;
+    height: 14px;
+    position: relative;
+    transform: rotate(0);
+    transition: 300ms ease-in-out;
+    cursor: pointer;
+
+    &__line{
+      left: 0;
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: $color--white;
+      opacity: 1;
+      transform: rotate(0);
+      transition: 150ms ease-in-out;
+
+      &.navicon__1{
+        top:0;
+      }
+
+      &.navicon__2{
+        top:6px;
+      }
+
+      &.navicon__3{
+        top:6px;
+      }
+
+      &.navicon__4{
+        bottom:0;
+      }
+
+    }
+  }
+
+  .nav-item{
+
+    .nav-link{
+      padding:.5rem 0;
+      letter-spacing: 1px;
+    }
+
+  }
+}
+
+
+
+@include media-breakpoint-up(lg) {
+  .mainnavigation {
+    .navbar-collapse {
+      background-color: transparent;
+      margin-left: 0;
+      margin-right: 0;
+      padding: 0;
+      float:left;
+      width:30%;
+
+    }
+
+    .header-logo-container{
+      .header-logo{
+        max-height: $headerHeight_lg;
+      }
+    }
+
+    .navbar-toggler{
+      padding:40px 0;
+    }
+
+    .navbar-nav {
+      width:100%;
+
+      .dropdown:hover>.dropdown-menu {
+        display: block;
+      }
+
+      .nav-item {
+
+        .nav-link {
+          padding: 38px .5rem;
+          color: white;
+          line-height:1.5;
+          white-space:nowrap;
+
+          &.active {
+            color:$link-color;
+          }
+        }
+        &:first-of-type{
+          .nav-link{
+            padding-left:0;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+

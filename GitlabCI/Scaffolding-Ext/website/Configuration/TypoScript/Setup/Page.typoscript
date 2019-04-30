@@ -11,9 +11,14 @@ page {
             1 = USER
             1 {
                 userFunc = Dpool\Website\UserFunctions\InlineAssetsRenderer->getInlineCss
-                userFunc.file = Resources/Public/Styles/Inline.min.css
+                userFunc.file = {$website.inlindeCSSFilePath}{$website.theme}/{$website.inlineCSSFileName}
             }
         }
+        ### FAVICONS
+        40 < lib.favicons
+
+        ### Cookie Consent Override Layout file
+        998.file = EXT:website/Resources/Private/Templates/Plugins/dp_cookieconsent/Layouts/Cookie.html
     }
 
 
@@ -34,7 +39,9 @@ page {
     }
 
     includeJSFooterlibs {
-
+        website = EXT:website/Resources/Public/JavaScript/Main.min.js
+        website.defer = 1
+        website.async = 1
     }
 
     meta {
@@ -42,8 +49,13 @@ page {
             value = width=device-width,initial-scale=1,user-scalable=no
         }
     }
+
+    ### GOOGLE TAG MANAGER
     1 < plugin.tx_googletagmanagerdatalayer_init
 
+    bodyTag >
+    bodyTagCObject = TEXT
+    bodyTagCObject.wrap = <body class="{$website.theme}">
 
     10 = FLUIDTEMPLATE
     10 {
@@ -58,10 +70,16 @@ page {
             10 = EXT:website/Resources/Private/Templates/Page/Partials
         }
         settings {
-            deferredCSSFile = {$website.deferredCSSFile}
+
+            deferredCSSFilePath = {$website.deferredCSSFilePath}
+            deferredCSSFileName = {$website.deferredCSSFileName}
+
+            theme = {$website.theme}
+            logo = {$website.logo}
         }
     }
 
+    ### GOOGLE TAG MANAGER
     999 < plugin.tx_googletagmanagerdatalayer
     3000 < plugin.tx_googletagmanager
 }

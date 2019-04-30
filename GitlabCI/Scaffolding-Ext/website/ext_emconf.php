@@ -1,10 +1,10 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'dpool base extension',
-    'description' => 'dpool base extension',
+    'title' => 'dpool Website Extension',
+    'description' => 'Default Website Extension by dpool',
     'category' => 'fe',
-    'author' => 'Daniel Thomas',
+    'author' => 'Andreas Habel',
     'author_email' => 'andreas.habel@dpool.com',
     'shy' => '',
     'dependencies' => '',

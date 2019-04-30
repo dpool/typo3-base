@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns="urn:oasis:names:tc:xliff:document:1.1">
+    <file source-language="en" datatype="plaintext" original="messages" date="2011-10-18T18:20:51Z" product-name="website">
+        <header/>
+        <body>
+            <trans-unit id="optOutLinkText">
+                <source>Click here to opt-out of Google Analytics</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

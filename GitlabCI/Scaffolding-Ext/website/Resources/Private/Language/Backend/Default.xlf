@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2014-02-07T17:08:32Z" product-name="website">
+        <header/>
+        <body>
+            <trans-unit id="tt_content.CType.custom_optout_link">
+                <source>Opt-Out Link</source>
+            </trans-unit>
+            <trans-unit id="tt_content.CType.description.custom_optout_link">
+                <source>Element generates an Opt-Out Link</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

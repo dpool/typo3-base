@@ -2,8 +2,14 @@
 ### WEBSITE - CONSTANTS ###
 ########################################################################################################################################################################################################
 
+website.theme = default
+website.logo = typo3conf/ext/website/Resources/Public/Images/logo.png
+
 ### add deferred css file
-website.deferredCSSFile = typo3conf/ext/website/Resources/Public/Stylesheets/Defer.min.css
+website.deferredCSSFilePath = typo3conf/ext/website/Resources/Public/Stylesheets/Themes/
+website.deferredCSSFileName = Defer.min.css
+website.inlindeCSSFilePath = Resources/Public/Stylesheets/Themes/
+website.inlineCSSFileName = Inline.min.css
 
 ##ä handle specific pids
 website.pid.dataPrivacy =

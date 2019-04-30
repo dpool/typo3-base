@@ -1,0 +1,113 @@
+.header{
+  .mobile-search-icon{
+    position:absolute;
+    right:0;
+    top:20px;
+    &:before{
+      position:absolute;
+      right: -7px;
+      font-size:24px;
+    }
+  }
+  .search{
+    padding:18px 0;
+
+    .icon.icon-search{
+        position:relative;
+      &:before{
+        position:absolute;
+        right: -7px;
+        font-size:24px;
+      }
+    }
+    .search-container{
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      margin-left: -15px;
+      margin-right: -15px;
+      background-color: $color--white;
+      padding-top: 0;
+      padding-bottom: 0;
+      height:0;
+      transition: height .25s linear;
+
+      .search-inner{
+        opacity:0;
+        transition: opacity .25s ease-in-out;
+        .icon.icon-cancel{
+          &:before{
+            font-size:28px;
+          }
+        }
+        .search-input{
+          background: transparent;
+          border: 0;
+          border-bottom: 1px solid $color--gray;
+          outline: 0;
+          color: $color--gray;
+          width:100%;
+        }
+      }
+
+    }
+  }
+}
+
+body.search-open{
+  .header{
+    .search{
+
+      .search-container{
+        height:$headerHeight;
+        .search-inner{
+          opacity:1;
+          transition: opacity .5s ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .header{
+    .search{
+      padding:40px 0;
+      z-index:5;
+      .icon.icon-search{
+        position:initial;
+        &:before{
+          position:initial;
+          right: unset;
+        }
+      }
+
+      .search-container{
+        height:0;
+        position:fixed;
+        top: $headerBannerHeight;
+        padding:0 15px;
+
+        .search-inner{
+          max-width:1400px;
+          padding:0 15px;
+          margin: 0 auto;
+          .icon.icon-cancel{
+            //margin-right:18px;
+          }
+        }
+      }
+    }
+  }
+
+  body.search-open{
+    .header{
+      .search{
+        .search-container{
+          height:$headerHeight_lg;
+        }
+      }
+    }
+  }
+}

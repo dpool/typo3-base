@@ -29,3 +29,16 @@ $signalSlotDispatcher->connect(
     'getSenderName',
     FALSE
 );
+
+
+########################################################################################################################################################################################################
+### ICON REGISTRY ###
+########################################################################################################################################################################################################
+
+### CUSTOM_OPTOUT_LINK
+$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+$iconRegistry->registerIcon(
+    'custom_optout_link',
+    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+    ['source' => 'EXT:website/Resources/Public/Icons/CTypes/custom_optout_link.png']
+);

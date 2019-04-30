@@ -1,4 +1,21 @@
 ########################################################################################################################################################################################################
+### FAVICONS ###
+########################################################################################################################################################################################################
+lib.favicons = TEXT
+lib.favicons.value (
+<link rel="shortcut icon" href="/typo3conf/ext/website/Resources/Public/Icons/Favicons/{$website.theme}/favicon.ico">
+)
+
+########################################################################################################################################################################################################
+### MAIN NAVIGATION###
+########################################################################################################################################################################################################
+lib.mainNavigation = COA
+lib.mainNavigation {
+
+}
+
+
+########################################################################################################################################################################################################
 ### SEARCHBOX: KE_SEARCH ###
 ########################################################################################################################################################################################################
 lib.ke_search_searchbox = TEXT
@@ -8,3 +25,34 @@ lib.ke_search_searchbox.value (
   <input type="submit" id="ke_search_searchfield_submit" alt="Find" />
 </form>
 )
+
+########################################################################################################################################################################################################
+### CONTENT ELEMENT ###
+########################################################################################################################################################################################################
+lib.contentElement {
+    layoutRootPaths {
+        200 = EXT:website/Resources/Private/Templates/Plugin/FluidStyledContent/Overrides/Layouts/
+    }
+    templateRootPaths {
+        200 = EXT:website/Resources/Private/Templates/Plugins/FluidStyledContent/Overrides/Templates/
+    }
+    partialRootPaths {
+        200 = EXT:website/Resources/Private/Templates/Plugin/FluidStyledContent/Overrides/Partials/
+    }
+}
+
+########################################################################################################################################################################################################
+### CUSTOM CONTENT ELEMENTS ###
+########################################################################################################################################################################################################
+lib.customContent = FLUIDTEMPLATE
+lib.customContent.dataProcessing.10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+lib.customContent.dataProcessing.20 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+lib.customContent.file = EXT:website/Resources/Private/Templates/Plugin/FluidStyledContent/Templates/Default.html
+lib.customContent.layoutRootPaths.10 = EXT:website/Resources/Private/Templates/Plugins/FluidStyledContent/Layouts/
+lib.customContent.partialRootPaths.10 = EXT:website/Resources/Private/Templates/Plugins/FluidStyledContent/Partials/
+lib.customContent.partialRootPaths.98 = EXT:fluid_styled_content/Resources/Private/Partials/
+lib.customContent.templateRootPaths.10 = EXT:website/Resources/Private/Templates/Plugins/FluidStyledContent/Templates/
+lib.customContent.variables.backendLayout = TEXT
+lib.customContent.variables.backendLayout.data = levelfield: -1, backend_layout_next_level, slide
+lib.customContent.variables.backendLayout.override.data =  page:backend_layout
+

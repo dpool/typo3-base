@@ -1,0 +1,7 @@
+########################################################################################################################################################################################################
+### CUSTOM CONTENT ELEMENTS ###
+########################################################################################################################################################################################################
+
+### CUSTOM_OPTOUT_LINK
+tt_content.custom_optout_link < lib.customContent
+tt_content.custom_strip_3col.file = EXT:website/Resources/Private/Templates/Plugins/FluidStyledContent/Templates/CustomContentOptOutLink.html
