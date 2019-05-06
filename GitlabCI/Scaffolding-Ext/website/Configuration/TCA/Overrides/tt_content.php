@@ -46,6 +46,8 @@ $customColumns['custom_link'] = getTcaForType('custom_link', 'custom_link');
 
 ### CUSTOM_OPTOUT_LINK
 $customCTypeItems['custom_optout_link'] = getCTypeItemConfig('custom_optout_link');
+$customTypes['custom_optout_link'] = 'header;Function Name';
+
 
 // #####################################################################################################################################################################################################
 // ##### FUNCTIONS TO BUILD TCA #####
