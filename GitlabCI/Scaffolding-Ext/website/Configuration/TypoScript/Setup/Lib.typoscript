@@ -31,27 +31,27 @@ lib.ke_search_searchbox.value (
 ########################################################################################################################################################################################################
 lib.contentElement {
     layoutRootPaths {
-        200 = EXT:website/Resources/Private/Templates/Plugin/FluidStyledContent/Overrides/Layouts/
+        200 = EXT:website/Resources/Private/Layouts/Overrides/FluidStyledContent/
     }
     templateRootPaths {
-        200 = EXT:website/Resources/Private/Templates/Plugins/FluidStyledContent/Overrides/Templates/
+        200 = EXT:website/Resources/Private/Templates/Overrides/FluidStyledContent/
     }
     partialRootPaths {
-        200 = EXT:website/Resources/Private/Templates/Plugin/FluidStyledContent/Overrides/Partials/
+        200 = EXT:website/Resources/Private/Partials/Overrides/FluidStyledContent/
     }
 }
+
 
 ########################################################################################################################################################################################################
 ### CUSTOM CONTENT ELEMENTS ###
 ########################################################################################################################################################################################################
 lib.customContent = FLUIDTEMPLATE
-lib.customContent.dataProcessing.10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
-lib.customContent.dataProcessing.20 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
-lib.customContent.file = EXT:website/Resources/Private/Templates/Plugin/FluidStyledContent/Templates/Default.html
-lib.customContent.layoutRootPaths.10 = EXT:website/Resources/Private/Templates/Plugins/FluidStyledContent/Layouts/
-lib.customContent.partialRootPaths.10 = EXT:website/Resources/Private/Templates/Plugins/FluidStyledContent/Partials/
-lib.customContent.partialRootPaths.98 = EXT:fluid_styled_content/Resources/Private/Partials/
-lib.customContent.templateRootPaths.10 = EXT:website/Resources/Private/Templates/Plugins/FluidStyledContent/Templates/
+lib.customContent.file = EXT:website/Resources/Private/Templates/CustomContentElement/Default.html
+lib.customContent.layoutRootPaths.10 = EXT:website/Resources/Private/Layouts/CustomContentElement/
+lib.customContent.templateRootPaths.10 = EXT:website/Resources/Private/Templates/CustomContentElement/
+lib.customContent.partialRootPaths.10 = EXT:fluid_styled_content/Resources/Private/Partials/
+lib.customContent.partialRootPaths.98 = EXT:website/Resources/Private/Partials/
+// add backendLayout as variable
 lib.customContent.variables.backendLayout = TEXT
 lib.customContent.variables.backendLayout.data = levelfield: -1, backend_layout_next_level, slide
 lib.customContent.variables.backendLayout.override.data =  page:backend_layout

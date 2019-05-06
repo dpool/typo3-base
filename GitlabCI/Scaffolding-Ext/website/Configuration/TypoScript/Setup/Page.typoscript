@@ -18,7 +18,7 @@ page {
         40 < lib.favicons
 
         ### Cookie Consent Override Layout file
-        998.file = EXT:website/Resources/Private/Templates/Plugins/dp_cookieconsent/Layouts/Cookie.html
+        998.file = EXT:website/Resources/Private/Layouts/Overrides/dp_cookieconsent/Cookie.html
     }
 
 
@@ -60,14 +60,14 @@ page {
     10 = FLUIDTEMPLATE
     10 {
         templateName = Default
-        layoutRootPaths{
-            10 = EXT:website/Resources/Private/Templates/Page/Layouts
+        ayoutRootPaths{
+            10 = EXT:website/Resources/Private/Layouts/Page/
         }
         templateRootPaths {
-            10 = EXT:website/Resources/Private/Templates/Page/Templates
+            10 = EXT:website/Resources/Private/Templates/Page/
         }
         partialRootPaths{
-            10 = EXT:website/Resources/Private/Templates/Page/Partials
+            10 = EXT:website/Resources/Private/Partials/
         }
         settings {
 
