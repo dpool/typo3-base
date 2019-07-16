@@ -2,12 +2,8 @@
 ._*
 .DS*
 .env
-.installed
-Gulpfile.js
 package-lock.json
-package.json
 FIRST_INSTALL
-git-pull.sh
 
 node_modules
 gitlab-ci-scripts
