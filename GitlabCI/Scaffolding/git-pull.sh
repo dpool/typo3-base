@@ -1,11 +1,41 @@
 #!/bin/sh
 
-# 1: execute git pull
+echo "1: execute git pull"
 git pull
 
-# 2: update dependencies
-npm update
+# read developer path on remote server from .env file
+DEV_PATH=$(grep DEV_PATH .env | xargs)
+IFS='=' read -ra DEV_PATH <<< "$DEV_PATH"
+DEV_PATH=${DEV_PATH[1]}
 
-# 3: build styles and scripts
-gulp styles
-gulp scripts
+
+echo "2: update composer"
+scp composer.json preview-bionic.dpool.net:$DEV_PATH
+ssh preview-bionic.dpool.net "cd $DEV_PATH && composer update"
+
+
+echo "3: update dependencies"
+scp package.json preview-bionic.dpool.net:$DEV_PATH
+ssh preview-bionic.dpool.net "cd $DEV_PATH && npm update"
+
+
+echo "4: copy the CI/CD yml configuration"
+scp preview-bionic.dpool.net:"$DEV_PATH"public/typo3conf/ext/base/GitlabCI/.gitlab-ci.yml .gitlab-ci.yml
+
+echo "5: copy gulp setup"
+scp preview-bionic.dpool.net:"$DEV_PATH"public/typo3conf/ext/base/GitlabCI/Gulp/Gulpfile.js Gulpfile.js
+
+echo "6: copy git-pull script"
+scp preview-bionic.dpool.net:"$DEV_PATH"public/typo3conf/ext/base/GitlabCI/Scaffolding/git-pull.sh git-pull.sh
+
+
+echo "Script wartet jetzt 15 Sekunden, um den Upload durch PHP-Storm abzuwarten"
+sleep 15s
+
+
+echo "7: build styles and scripts"
+ssh preview-bionic.dpool.net "cd $DEV_PATH && gulp styles"
+ssh preview-bionic.dpool.net "cd $DEV_PATH && gulp scripts"
+
+
+echo "Bitte kontrollieren, ob sich die git-pull.sh Datei geändert hat. Falls ja => nochmals ausführen!"

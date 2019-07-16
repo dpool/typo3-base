@@ -52,7 +52,7 @@ build_frontend:
   dependencies:
     - composer
   before_script:
-    - cd .Build && npm install && cd -
+    - cd .Build && npm update && cd -
   script:
     - cd .Build && gulp build-production && cd -
 
@@ -82,14 +82,12 @@ build_typo3:
     - echo $'ENCRYPTION_KEY=\''"${!ENCRYPTION_KEY_VARIABLE-`echo $ENCRYPTION_KEY`}"$'\'' >> .Build/.env
     - INSTALL_TOOL_PASSWORD_VARIABLE=$BRANCH'_INSTALL_TOOL_PASSWORD'
     - echo $'INSTALL_TOOL_PASSWORD=\''"${!INSTALL_TOOL_PASSWORD_VARIABLE-`echo $INSTALL_TOOL_PASSWORD`}"$'\'' >> .Build/.env
-    - php .Build/vendor/bin/typo3cms install:generatepackagestates
   dependencies:
     - composer
   artifacts:
     expire_in: 60 minutes
     paths:
       - .Build/.env
-      - .Build/public/typo3conf/PackageStates.php
 
 install:
   tags:
