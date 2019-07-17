@@ -55,6 +55,11 @@ build_frontend:
     - cd .Build && npm update && cd -
   script:
     - cd .Build && gulp build-production && cd -
+  artifacts:
+    expire_in: 60 minutes
+    paths:
+      - .Build/public/typo3conf/ext/website/Resources/Public/JavaScript/
+      - .Build/public/typo3conf/ext/website/Resources/Public/Stylesheets/
 
 
 build_typo3:
