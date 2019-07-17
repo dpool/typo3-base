@@ -198,6 +198,7 @@ install:
       --exclude=/public/typo3conf/l10n
       --exclude=/public/typo3temp
       --exclude=/public/uploads
+      --exclude=/public/.htaccess
       --exclude=/var
       --exclude=.git
       --exclude=.gitattributes
