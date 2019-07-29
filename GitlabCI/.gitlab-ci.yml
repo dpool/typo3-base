@@ -194,6 +194,7 @@ install:
       --exclude=/backups
       --exclude=/gitlab-ci-scripts
       --exclude=/public/.htaccess.*
+      --exclude=/public/.htpasswd.*
       --exclude=/public/fileadmin
       --exclude=/public/typo3conf/LocalConfiguration.php
       --exclude=/public/typo3conf/l10n
