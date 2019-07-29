@@ -33,6 +33,8 @@ composer:
       --exclude=/composer.json
       --exclude=/composer.lock
       --exclude=/composer.phar
+      --exclude=/.htpasswd
+      --exclude=/.htaccess
       --exclude-from=gitlab-ci-scripts/rsync-build-excludes.txt
     - if [ -f ./gitlab-ci-scripts/after-composer.sh ]; then cd .Build && ../gitlab-ci-scripts/after-composer.sh && cd -; fi
   artifacts:

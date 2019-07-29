@@ -4,4 +4,4 @@
 
 ### CUSTOM_OPTOUT_LINK
 tt_content.custom_optout_link < lib.customContent
-tt_content.custom_optout_link.file = EXT:website/Resources/Private/Templates/CustomContentElement/CustomContentOptOutLink.html
+tt_content.custom_optout_link.file = EXT:website/Resources/Private/Templates/CustomContentElement/OptOutLink.html
