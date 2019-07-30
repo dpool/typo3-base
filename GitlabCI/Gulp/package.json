@@ -20,6 +20,10 @@
     "gulp-sourcemaps": "^2.6.5",
     "require-dir": "^1.2.0"
   },
+  "browserslist": [
+    "last 2 version",
+    "> 2%"
+  ],
   "devDependencies": {
 
   }
