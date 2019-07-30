@@ -23,14 +23,6 @@ module.exports = {
         errLogToConsole: true,
         outputStyle: 'expanded'
     },
-    autoprefixerOptions: {
-        browsers: [
-            'last 2 versions',
-            '> 5%'
-        ],
-        cascade: false
-    },
-
 
     // ###########################################################################################
     // ##### JS VARIABLES

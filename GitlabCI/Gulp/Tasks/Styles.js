@@ -26,7 +26,7 @@ gulp.task('styles', function () {
         .src(config.cssInputFiles)
         .pipe(sourcemaps.init())
         .pipe(sass(config.sassOptions).on('error', sass.logError))
-        .pipe(autoprefixer(config.autoprefixerOptions))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(config.cssOutputDist))
         .pipe(rename({
             suffix: '.min'
