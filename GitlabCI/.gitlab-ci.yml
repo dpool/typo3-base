@@ -134,11 +134,11 @@ install:
       rsync -az -e "ssh -p $SSH_PORT" --delete
       --exclude=/gitlab-ci-scripts
       --exclude=/public/.htaccess.*
-      --exclude=/public/.htpasswd.*
       --exclude=/var
       --exclude=.git
       --exclude=.gitattributes
       --exclude=.gitignore
+      --exclude=/public/.htpasswd
       --exclude=*.md
       --exclude-from=gitlab-ci-scripts/rsync-deploy-excludes.txt
       .Build/ $SSH_USERNAME@$SSH_HOST:$SSH_REMOTE_PATH
@@ -194,13 +194,13 @@ install:
       --exclude=/backups
       --exclude=/gitlab-ci-scripts
       --exclude=/public/.htaccess.*
-      --exclude=/public/.htpasswd.*
       --exclude=/public/fileadmin
       --exclude=/public/typo3conf/LocalConfiguration.php
       --exclude=/public/typo3conf/l10n
       --exclude=/public/typo3temp
       --exclude=/public/uploads
       --exclude=/public/.htaccess
+      --exclude=/public/.htpasswd
       --exclude=/var
       --exclude=.git
       --exclude=.gitattributes
