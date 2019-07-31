@@ -38,13 +38,13 @@ page {
     10 {
         templateName = Default
         layoutRootPaths{
-            10 = EXT:base/Resources/Private/Templates/Page/Layouts
+            10 = EXT:base/Resources/Private/Templates/Page/Layouts/
         }
         templateRootPaths {
-            10 = EXT:base/Resources/Private/Templates/Page/Templates
+            10 = EXT:base/Resources/Private/Templates/Page/Templates/
         }
         partialRootPaths{
-            10 = EXT:base/Resources/Private/Templates/Page/Partials
+            10 = EXT:base/Resources/Private/Templates/Page/Partials/
         }
         settings {
 

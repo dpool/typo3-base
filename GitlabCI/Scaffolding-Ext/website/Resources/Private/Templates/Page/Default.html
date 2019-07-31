@@ -1,81 +1,5 @@
 <f:layout name="Default"/>
 <f:section name="PageHeader">
-    <div class="header-top bg-secondary d-none d-lg-block">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div class="d-inline-block">
-                <f:link.page pageUid="1">
-                    <f:translate key="LLL:EXT:website/Resources/Private/Language/locallang.xlf:nowOnTV"/>
-                </f:link.page>
-                <span class="text-white ml-3">__Monk__</span>
-            </div>
-            <div class="d-inline-block float-right text-white align-self-center">
-                <f:if condition="{settings.entertainWebUrl} != ''">
-                    <a href="{settings.entertainWebUrl}" target="_blank" title="__OPEN_SOCIAL_MEDIA_PROFILE__" class="text-white link">
-                        <f:image src="EXT:website/Resources/Public/Images/entertainweb.png" title="__OPEN_ENTERTAINWEB__" height="25c" class="img-fluid my-1 mr-2"/>
-                    </a>
-                </f:if>
-                <f:render partial="SocialMedia" arguments="{settings: settings, linkClass: 'text-white', additionalClass:'d-inline'}"/>
-            </div>
-        </div>
-    </div>
-    <div class="header-main bg-secondary">
-        <div class="container">
-            <nav class="mainnavigation navbar navbar-expand-lg navbar-light position-relative p-0">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                   <span class="navicon">
-                        <span class="navicon__line navicon__1"></span>
-                        <span class="navicon__line navicon__2"></span>
-                        <span class="navicon__line navicon__3"></span>
-                        <span class="navicon__line navicon__4"></span>
-                     </span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-lg-auto initial-no-opacity">
-                        <div class="socialMedia-mobile d-lg-none bg-secondary text-center">
-                            <f:link.page pageUid="1">
-                                <f:translate key="LLL:EXT:website/Resources/Private/Language/locallang.xlf:nowOnTV"/>
-                            </f:link.page>
-                            <span class="text-white ml-3">__Monk__</span>
-                        </div>
-                        <f:cObject typoscriptObjectPath="lib.mainNavigation"/>
-                        <li class="d-none d-lg-block js-ignore nav-item dropdown font-weight-boldest">
-                            <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <f:translate key="LLL:EXT:website/Resources/Private/Language/locallang.xlf:more"/>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            </div>
-                        </li>
-                        <div class="socialMedia-mobile d-lg-none text-center">
-                            <f:render partial="SocialMedia" arguments="{settings: settings, linkClass: 'text-custom-gray', additionalClass:'margin-inverted mb-3 mt-3'}"/>
-                        </div>
-                    </ul>
-                </div>
-                <div class="header-logo-container position-absolute">
-                    <a class="navbar-brand position-relative  p-0" href="#">
-                        <img class="header-logo" src="{settings.logo}" height="100c" class="d-inline-block align-top" alt="">
-                    </a>
-                </div>
-                <span class="mobile-search-icon icon icon-search text-white d-lg-none">&nbsp;</span>
-                <div class="search float-right">
-                    <span class="icon icon-search text-white d-none d-lg-block">&nbsp;</span>
-                    <div class="search-container initial-no-opacity">
-                        <div class="search-inner d-flex flex-row justify-content-between align-items-center h-100">
-                            <div class="col-lg-1 text-right p-0 mt-2">
-                                <span class="icon icon-search text-custom-gray ml-2">&nbsp;</span>
-                            </div>
-                            <div class="col-9 col-lg-10">
-                                <f:cObject typoscriptObjectPath="lib.ke_search_searchbox"/>
-                            </div>
-                            <div class="col-lg-1 p-0 mt-2 text-right">
-                                <span class="icon icon-cancel text-custom-gray">&nbsp;</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
 
 </f:section>
 
@@ -83,13 +7,6 @@
     <article>
         <!--TYPO3SEARCH_begin-->
         <section class="global-wrapper">
-            <f:if condition="{settings.entertainWebUrl} != ''">
-                <div class="bg-secondary">
-                    <a href="{settings.entertainWebUrl}" target="_blank" title="__OPEN_SOCIAL_MEDIA_PROFILE__" class="d-block d-lg-none text-center mx-auto">
-                        <f:image src="EXT:website/Resources/Public/Images/entertainweb.png" title="__OPEN_ENTERTAINWEB__" height="25c" class="img-fluid my-1"/>
-                    </a>
-                </div>
-            </f:if>
             <div class="content-wrapper">
                 <f:cObject typoscriptObjectPath="styles.content.get"/>
             </div>
@@ -99,58 +16,5 @@
 </f:section>
 
 <f:section name="Footer">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center pt-3">
-            <img class="footer-logo d-inline-block align-top" src="{settings.logoWhite}" alt="">
-            <div class="">
-                <h2 class="d-inline mb-0 mr-4">
-                    <f:translate key="LLL:EXT:website/Resources/Private/Language/locallang.xlf:followUs"/>
-                </h2>
-                <f:render partial="SocialMedia" arguments="{settings: settings, linkClass: 'text-white', additionalClass:'d-inline'}"/>
-            </div>
-        </div>
-        <hr class="divider divider-nav margin-inverted">
-        <div class="row">
-            <div class="col-12 col-md-4 col-lg-2 mb-3 mb-lg-0">
-                <h2>
-                    <f:translate key="LLL:EXT:website/Resources/Private/Language/locallang.xlf:usefullLinks"/>
-                </h2>
-                <f:cObject typoscriptObjectPath="lib.footerNavLeft"/>
-            </div>
-            <div class="col-12 col-md-8 col-lg-5 mb-3 mb-lg-0">
-                <h2>
-                    <f:translate key="LLL:EXT:website/Resources/Private/Language/locallang.xlf:series"/>
-                </h2>
-            </div>
-            <div class="col-12 col-md-4 col-lg-3 mb-3 mb-lg-0">
-                <h2>
-                    <f:translate key="LLL:EXT:website/Resources/Private/Language/locallang.xlf:movies"/>
-                </h2>
-            </div>
-            <div class="col-12 col-md-8 col-lg-2 mb-3 mb-lg-0">
-                <h2>
-                    <f:translate key="LLL:EXT:website/Resources/Private/Language/locallang.xlf:divisionOfNbcUniversal"/>
-                </h2>
-                <f:cObject typoscriptObjectPath="lib.footerNavRight"/>
-                <f:if condition="{settings.entertainWebUrl} != ''">
-                    <a href="{settings.entertainWebUrl}" target="_blank" title="__OPEN_SOCIAL_MEDIA_PROFILE__" class="text-white link">
-                        <f:image src="EXT:website/Resources/Public/Images/entertainweb.png" title="__OPEN_ENTERTAINWEB__" width="100c" class="img-fluid mr-1"/>
-                    </a>
-                </f:if>
 
-            </div>
-        </div>
-        <hr class="divider margin-inverted">
-        <div class="row">
-            <div class="col text-center small">
-                <f:cObject typoscriptObjectPath="lib.footerNavBottom"/>
-                <p class="mt-2">
-                    ©
-                    <f:format.date format="Y">now</f:format.date>
-                    NBCUniversal. All rights reserved.<br>
-                    {settings.footer.address}
-                </p>
-            </div>
-        </div>
-    </div>
 </f:section>
