@@ -16,9 +16,6 @@ page {
         }
         ### FAVICONS
         40 < lib.favicons
-
-        ### Cookie Consent Override Layout file
-        998.file = EXT:website/Resources/Private/Layouts/Overrides/dp_cookieconsent/Cookie.html
     }
 
 
