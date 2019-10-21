@@ -14,10 +14,9 @@
 		}
 	},
 	"extra": {
-
-	},
-	"replace": {
-		"base": "dpool/typo3-base"
+        "typo3/cms": {
+            "extension-key": "base"
+        }
 	},
 	"scripts": {
 		"post-autoload-dump": [
