@@ -17,8 +17,7 @@
 
 	},
 	"replace": {
-		"dpool/base": "self.version",
-		"typo3-ter/base": "self.version"
+		"base": "dpool/typo3-base"
 	},
 	"scripts": {
 		"post-autoload-dump": [
