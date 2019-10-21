@@ -84,6 +84,7 @@ page {
             pid.dataPrivacy = {$website.pid.dataPrivacyPid}
 
             cookieConsent.colors.popup.background = {$website.cookieConsent.colors.popup.background}
+            cookieConsent.colors.popup.text = {$website.cookieConsent.colors.popup.text}
             cookieConsent.colors.button.background = {$website.cookieConsent.colors.button.background}
             cookieConsent.colors.button.text = {$website.cookieConsent.colors.button.text}
 

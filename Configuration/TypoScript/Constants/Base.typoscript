@@ -30,6 +30,7 @@ base.socialMedia.whatsapp =
 website.pid.dataPrivacyPid =
 
 website.cookieConsent.colors.popup.background =
+website.cookieConsent.colors.popup.text =
 website.cookieConsent.colors.button.background =
 website.cookieConsent.colors.button.text =
 
