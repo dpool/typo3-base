@@ -56,7 +56,7 @@ page {
             cookieConsent.colors.button.text = {$website.cookieConsent.colors.button.text}
 
             tracking.googleTagManager.enable = {$website.tracking.googleTagManager.enable}
-            tracking.googleTagManager.id = G{$website.tracking.googleTagManager.id}
+            tracking.googleTagManager.id = {$website.tracking.googleTagManager.id}
 
             tracking.hubspot.enable = {$website.tracking.hubspot.enable}
             tracking.hubspot.id = {$website.tracking.hubspot.id}
