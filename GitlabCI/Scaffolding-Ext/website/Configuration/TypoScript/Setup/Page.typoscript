@@ -60,14 +60,17 @@ page {
     10 = FLUIDTEMPLATE
     10 {
         templateName = Default
-        ayoutRootPaths{
-            10 = EXT:website/Resources/Private/Layouts/Page/
+        layoutRootPaths{
+            10 = EXT:base/Resources/Private/Layouts/Page/
+            20 = EXT:website/Resources/Private/Layouts/Page/
         }
         templateRootPaths {
-            10 = EXT:website/Resources/Private/Templates/Page/
+            10 = EXT:base/Resources/Private/Templates/Page/
+            20 = EXT:website/Resources/Private/Templates/Page/
         }
         partialRootPaths{
-            10 = EXT:website/Resources/Private/Partials/
+            10 = EXT:base/Resources/Private/Partials/
+            20 = EXT:website/Resources/Private/Partials/
         }
         settings {
 

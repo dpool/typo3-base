@@ -13,13 +13,6 @@ base.company.address.streetAddress =
 base.company.address.addressLocality =
 base.company.address.postalCode =
 
-################################################################################################################################################################################################################################################################################################################################################################################################################
-### BASE GTM TRACKING ###
-########################################################################################################################################################################################################
-base.tracking.gtm.enabled = 0
-base.tracking.gtm.id =
-base.tracking.gtm.dataLayerVersion = 1
-
 ########################################################################################################################################################################################################
 ### BASE SOCIAL MEDIA ###
 ########################################################################################################################################################################################################
@@ -29,3 +22,32 @@ base.socialMedia.twitter =
 base.socialMedia.instagram =
 base.socialMedia.youtube =
 base.socialMedia.whatsapp =
+
+
+###############################################
+##### COOKIE CONSENT & TRACKING SETTINGS ######
+###############################################
+website.pids.dataPrivacyPid =
+
+website.cookieConsent.colors.popup.background =
+website.cookieConsent.colors.button.background =
+website.cookieConsent.colors.button.text =
+
+website.tracking.googleTagManager.enable = 0
+website.tracking.googleTagManager.id =
+
+website.tracking.matomo.enable = 0
+website.tracking.matomo.url =
+website.tracking.matomo.id =
+
+website.tracking.hubspot.enable = 0
+website.tracking.hubspot.id =
+
+website.tracking.leadForensic.enable = 0
+website.tracking.leadForensic.id =
+
+website.tracking.salesViewer.enable = 0
+website.tracking.salesViewer.id =
+
+website.tracking.baidu.enable = 0
+website.tracking.baidu.id =

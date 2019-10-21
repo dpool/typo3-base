@@ -38,16 +38,40 @@ page {
     10 {
         templateName = Default
         layoutRootPaths{
-            10 = EXT:base/Resources/Private/Templates/Page/Layouts/
+            10 = EXT:base/Resources/Private/Layouts/Page/
         }
         templateRootPaths {
-            10 = EXT:base/Resources/Private/Templates/Page/Templates/
+            10 = EXT:base/Resources/Private/Templates/Page/
         }
         partialRootPaths{
-            10 = EXT:base/Resources/Private/Templates/Page/Partials/
+            10 = EXT:base/Resources/Partials/
         }
         settings {
+            ##### COOKIE CONSENT & TRACKING SETTINGS #####
+            pids.dataPrivacy = {$website.dataPrivacyPid}
 
+            cookieConsent.colors.popup.background = {$website.cookieConsent.colors.popup.background}
+            cookieConsent.colors.button.background = {$website.cookieConsent.colors.button.background}
+            cookieConsent.colors.button.text = {$website.cookieConsent.colors.button.text}
+
+            tracking.googleTagManager.enable = {$website.tracking.googleTagManager.enable}
+            tracking.googleTagManager.id = G{$website.tracking.googleTagManager.id}
+
+            tracking.hubspot.enable = {$website.tracking.hubspot.enable}
+            tracking.hubspot.id = {$website.tracking.hubspot.id}
+
+            tracking.matomo.enable = {$website.tracking.matomo.enable}
+            tracking.matomo.id = {$website.tracking.matomo.id}
+            tracking.matomo.url = {$website.tracking.matomo.url}
+
+            tracking.leadForensic.enable = {$website.tracking.leadForensic.enable}
+            tracking.leadForensic.id = {$website.tracking.leadForensic.id}
+
+            tracking.salesViewer.enable = {$website.tracking.salesViewer.enable}
+            tracking.salesViewer.id = {$website.tracking.salesViewer.id}
+
+            tracking.baidu.enable = {$website.tracking.baidu.enable}
+            tracking.baidu.id = {$website.tracking.baidu.id}
         }
     }
 

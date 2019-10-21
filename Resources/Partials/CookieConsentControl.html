@@ -1,0 +1,232 @@
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+
+<script type="text/javascript">
+    // get tracking settings
+    var trackingSettings = {
+        googleTagManager: {
+            enable: '<f:format.raw>{settings.tracking.googleTagManager.enable}</f:format.raw>' === '1',
+            id: '<f:format.raw>{settings.tracking.googleTagManager.id}</f:format.raw>'
+        },
+        matomo: {
+            enable: '<f:format.raw>{settings.tracking.matomo.enable}</f:format.raw>' === '1',
+            id: '<f:format.raw>{settings.tracking.matomo.id}</f:format.raw>',
+            url: '<f:format.raw>{settings.tracking.matomo.url}</f:format.raw>'
+        },
+        hubspot: {
+            enable: '<f:format.raw>{settings.tracking.hubspot.enable}</f:format.raw>' === '1',
+            id: '<f:format.raw>{settings.tracking.hubspot.id}</f:format.raw>'
+        },
+        leadForensic: {
+            enable: '<f:format.raw>{settings.tracking.leadForensic.enable}</f:format.raw>' === '1',
+            id: '<f:format.raw>{settings.tracking.leadForensic.id}</f:format.raw>'
+        },
+        salesViewer: {
+            enable: '<f:format.raw>{settings.tracking.salesViewer.enable}</f:format.raw>' === '1',
+            id: '<f:format.raw>{settings.tracking.googleTagManager.id}</f:format.raw>'
+        },
+        baidu: {
+            enable: '<f:format.raw>{settings.tracking.baidu.enable}</f:format.raw>' === '1',
+            id: '<f:format.raw>{settings.tracking.baidu.id}</f:format.raw>'
+        }
+
+    };
+    window.cookieconsent.initialise({
+        "type": "opt-in",
+        "palette": {
+            "popup": {
+                "background": "<f:format.raw>{settings.cookieConsent.colors.popup.background}</f:format.raw>"
+            },
+            "button": {
+                "background": "<f:format.raw>{settings.cookieConsent.colors.button.background}</f:format.raw>",
+                "text": "<f:format.raw>{settings.cookieConsent.colors.button.text}</f:format.raw>"
+            }
+        },
+        "content": {
+            "message": '<f:translate key="cookieNotice.message" extensionName="website" />',
+            "allow": '<f:translate key="cookieNotice.allow" extensionName="website" />',
+            "deny": '<f:translate key="cookieNotice.deny" extensionName="website" />',
+            "policy": '<f:translate key="cookieNotice.policy" extensionName="website" />',
+            "link": '<f:translate key="cookieNotice.link" extensionName="website" />',
+            "href": '<f:uri.page pageUid="{settings.pids.dataPrivacy}" />'
+        },
+        onStatusChange: function () {
+            var enabled = false;
+            if (this.hasConsented()) {
+                enabled = true;
+            }
+            controlTracking(enabled);
+        },
+        onInitialise: function () {
+            if (this.hasConsented()) {
+                controlTracking(true);
+            }
+        }
+    });
+
+    /**
+     * MAIN FUNCTION TO ENABLE AND DISABLE TRACKINGS
+     *
+     */
+    function controlTracking(enabled) {
+
+        if(trackingSettings.googleTagManager.enable === true && trackingSettings.googleTagManager.id.length > 0){
+            toggleGoogleTagManagerTracking(enabled, trackingSettings.googleTagManager.id);
+        }
+        if(trackingSettings.matomo.enable === true && trackingSettings.matomo.id.length > 0 && trackingSettings.matomo.url.length > 0){
+            toggleMatomoTracking(enabled, trackingSettings.matomo.id, trackingSettings.matomo.url);
+        }
+        if(trackingSettings.hubspot.enable === true && trackingSettings.hubspot.id.length > 0){
+            toggleHubspotTracking(enabled, trackingSettings.hubspot.id);
+        }
+        if(trackingSettings.leadForensic.enable === true && trackingSettings.leadForensic.id.length > 0){
+            toggleLeadForensicTracking(enabled, trackingSettings.leadForensic.id);
+        }
+        if(trackingSettings.salesViewer.enable === true && trackingSettings.salesViewer.id.length > 0){
+            toggleSalesViewerTracking(enabled, trackingSettings.salesViewer.id);
+        }
+        if(trackingSettings.baidu.enable === true && trackingSettings.baidu.id.length > 0){
+            toggleBaiduTracking(enabled, trackingSettings.baidu.id);
+        }
+    }
+
+    /**
+     * GOOGLE TAG MANAGER
+     * @param enabled
+     */
+    function toggleGoogleTagManagerTracking(enabled, trackingId){
+        var scriptIdentifier = 'dpool_googleTagManager';
+        if(enabled){
+            (function (w,d,s,l,i) {
+                w[l]=w[l]||[];
+                w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+                var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+                j.async=true;
+                j.src= '//www.googletagmanager.com/gtm.js?id='+i+dl;
+                j.id= scriptIdentifier;
+                f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer',trackingId);
+        }else{
+            removeGenericElementById(scriptIdentifier);
+        }
+
+    };
+
+    /**
+     * MATOMO
+     * @param enabled
+     */
+    function toggleMatomoTracking(enabled, trackingId, url){
+        var scriptIdentifier = 'dpool_matomo';
+        if(enabled){
+            var _paq = _paq || [];
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+                var u=url;
+                _paq.push(['setTrackerUrl', u+'piwik.php']);
+                _paq.push(['setSiteId', trackingId]);
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                g.type='text/javascript';
+                g.async=true;
+                g.defer=true;
+                g.src=u+'piwik.js';
+                g.id=scriptIdentifier;
+                s.parentNode.insertBefore(g,s);
+            })();
+        }else{
+            removeGenericElementById(scriptIdentifier);
+        }
+    };
+
+    /**
+     * HUBSPOT
+     * @param enabled
+     */
+    function toggleHubspotTracking(enabled, trackingId){
+        var scriptIdentifier = 'dpool_hubspot';
+
+        if(enabled){
+            var hubspotScript = document.createElement("script");
+            hubspotScript.src = "//js.hs-scripts.com/"+trackingId+".js";
+            hubspotScript.id = scriptIdentifier;
+            hubspotScript.async = true;
+            document.querySelector('body').append(hubspotScript);
+        }else{
+            removeGenericElementById(scriptIdentifier);
+        }
+    };
+
+    /**
+     * LEAD FORENSIC
+     * @param enabled
+     */
+    function toggleLeadForensicTracking(enabled, trackingId){
+        var scriptIdentifier = 'dpool_leadForensic';
+
+        if(enabled){
+            var leadforensicScript = document.createElement("script");
+            leadforensicScript.src = "//secure.leadforensics.com/js/"+trackingId+".js";
+            leadforensicScript.id = scriptIdentifier;
+            leadforensicScript.async = true;
+            document.querySelector('head').append(leadforensicScript);
+        }else{
+            removeGenericElementById(scriptIdentifier);
+        }
+    };
+
+    /**
+     * SALES VIEWER
+     * @param enabled
+     */
+    function toggleSalesViewerTracking(enabled, trackingId){
+        var scriptIdentifier = 'dpool_salesViewer';
+        if(enabled){
+
+        }else{
+            removeGenericElementById(scriptIdentifier);
+        }
+    };
+
+    /**
+     * BAIDU
+     * @param enabled
+     */
+    function toggleBaiduTracking(enabled, trackingId){
+        var scriptIdentifier = 'dpool_baidu';
+        if(enabled){
+            var _hmt = _hmt || [];
+
+            (function()
+            {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?"+trackingId;
+                hm.id = scriptIdentifier;
+                hm.async = true;
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }else{
+            removeGenericElementById(scriptIdentifier);
+        }
+    };
+
+    /**
+     * REMOVE ELEMENT BY IDENTIFIER FROM DOCUMENT
+     * @param scriptIdentifier
+     */
+    function removeGenericElementById(scriptIdentifier){
+        var element = document.getElementById(scriptIdentifier);
+        if(element){
+            element.parentNode.removeChild(element);
+        }
+    }
+
+    // add CSS file to header
+    var head = document.getElementsByTagName('HEAD')[0];
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = 'https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css';
+    head.appendChild(link);
+
+</script>
