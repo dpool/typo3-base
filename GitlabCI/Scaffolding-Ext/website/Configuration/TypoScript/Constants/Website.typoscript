@@ -11,5 +11,5 @@ website.deferredCSSFileName = Defer.min.css
 website.inlindeCSSFilePath = Resources/Public/Stylesheets/Themes/
 website.inlineCSSFileName = Inline.min.css
 
-##ä handle specific pids
+### handle specific pids
 website.pid.dataPrivacy =

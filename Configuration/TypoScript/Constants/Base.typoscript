@@ -27,7 +27,7 @@ base.socialMedia.whatsapp =
 ###############################################
 ##### COOKIE CONSENT & TRACKING SETTINGS ######
 ###############################################
-website.pids.dataPrivacyPid =
+website.pid.dataPrivacyPid =
 
 website.cookieConsent.colors.popup.background =
 website.cookieConsent.colors.button.background =

@@ -48,7 +48,7 @@ page {
         }
         settings {
             ##### COOKIE CONSENT & TRACKING SETTINGS #####
-            pids.dataPrivacy = {$website.dataPrivacyPid}
+            pid.dataPrivacy = {$website.pid.dataPrivacyPid}
 
             cookieConsent.colors.popup.background = {$website.cookieConsent.colors.popup.background}
             cookieConsent.colors.button.background = {$website.cookieConsent.colors.button.background}
