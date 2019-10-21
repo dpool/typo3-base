@@ -1,8 +1,0 @@
-
-plugin.tx_googletagmanagerdatalayer.settings.enable = {$base.tracking.gtm.enabled}
-plugin.tx_googletagmanagerdatalayer.settings.tagId = {$base.tracking.gtm.id}
-plugin.tx_googletagmanagerdatalayer.settings.dataLayerVersion = {$base.tracking.gtm.dataLayerVersion}
-
-plugin.tx_googletagmanager.settings.enable = {$base.tracking.gtm.enabled}
-plugin.tx_googletagmanager.settings.tagId = {$base.tracking.gtm.id}
-plugin.tx_googletagmanager.settings.dataLayerVersion =  {$base.tracking.gtm.dataLayerVersion}
