@@ -47,9 +47,6 @@ page {
         }
     }
 
-    ### GOOGLE TAG MANAGER
-    1 < plugin.tx_googletagmanagerdatalayer_init
-
     bodyTag >
     bodyTagCObject = TEXT
     bodyTagCObject.wrap = <body class="{$website.theme}">
@@ -105,8 +102,4 @@ page {
             tracking.baidu.id = {$website.tracking.baidu.id}
         }
     }
-
-    ### GOOGLE TAG MANAGER
-    999 < plugin.tx_googletagmanagerdatalayer
-    3000 < plugin.tx_googletagmanager
 }

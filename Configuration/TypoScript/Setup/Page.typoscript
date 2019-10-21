@@ -31,7 +31,6 @@ page {
             value = width=device-width,initial-scale=1,user-scalable=no
         }
     }
-    1 < plugin.tx_googletagmanagerdatalayer_init
 
 
     10 = FLUIDTEMPLATE
@@ -75,7 +74,4 @@ page {
             tracking.baidu.id = {$website.tracking.baidu.id}
         }
     }
-
-    999 < plugin.tx_googletagmanagerdatalayer
-    3000 < plugin.tx_googletagmanager
 }
