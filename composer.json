@@ -17,6 +17,7 @@
 
 	},
 	"replace": {
+		"dpool/base": "self.version",
 		"typo3-ter/base": "self.version"
 	},
 	"scripts": {
