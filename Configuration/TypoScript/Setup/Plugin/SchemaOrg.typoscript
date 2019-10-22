@@ -5,24 +5,24 @@ plugin.tx_schemaorg {
             # Find other types on:
             # http://schema.org/LocalBusiness
             type = Organization
-            name = {$base.company.name}
-            url = {$base.baseURL}
-            telephone = {$base.company.telephone}
+            name = {$website.schemaOrg.company.name}
+            url = {$website.schemaOrg.baseURL}
+            telephone = {$website.schemaOrg.company.telephone}
             image {
                 type = ImageObject
-                url = {$base.company.logo}
-                caption = {$base.company.name}
+                url = {$website.schemaOrg.company.logo}
+                caption = {$website.schemaOrg.company.name}
             }
             address {
                 type = PostalAddress
-                streetAddress = {$base.company.address.streetAddress}
-                addressLocality = {$base.company.address.addressLocality}
-                postalCode = {$base.company.address.postalCode}
+                streetAddress = {$website.schemaOrg.company.address.streetAddress}
+                addressLocality = {$website.schemaOrg.company.address.addressLocality}
+                postalCode = {$website.schemaOrg.company.address.postalCode}
             }
             # Contact
             contactPoint {
                 type = ContactPoint
-                telephone = {$base.company.telephone}
+                telephone = {$website.schemaOrg.company.telephone}
                 # contact types for phone numbers:
                 # https://developers.google.com/search/docs/data-types/corporate-contacts
                 contactType = customer service
@@ -31,11 +31,8 @@ plugin.tx_schemaorg {
             sameAs {
                 # Simply add multiple pages divided by comma
 #                ARRAY = https://twitter.com/codingms,https://www.instagram.com/codingms/
-                ARRAY = {$base.socialMedia.all}
+                ARRAY = {$website.schemaOrg.socialMedia.all}
             }
-
-            geo >
-            openingHoursSpecification >
         }
     }
 }

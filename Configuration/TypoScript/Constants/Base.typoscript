@@ -1,27 +1,27 @@
 ########################################################################################################################################################################################################
 ### BASE CONSTANTS ###
 ########################################################################################################################################################################################################
-base.baseURL =
+website.baseURL =
 
 ########################################################################################################################################################################################################
 ### BASE SCHEMA ORG CONSTANTS ###
 ########################################################################################################################################################################################################
-base.company.name =
-base.company.logo =
-base.company.telephone =
-base.company.address.streetAddress =
-base.company.address.addressLocality =
-base.company.address.postalCode =
+website.company.name =
+website.company.logo =
+website.company.telephone =
+website.company.address.streetAddress =
+website.company.address.addressLocality =
+website.company.address.postalCode =
 
 ########################################################################################################################################################################################################
 ### BASE SOCIAL MEDIA ###
 ########################################################################################################################################################################################################
-base.socialMedia.all =
-base.socialMedia.facebook =
-base.socialMedia.twitter =
-base.socialMedia.instagram =
-base.socialMedia.youtube =
-base.socialMedia.whatsapp =
+website.socialMedia.all =
+website.socialMedia.facebook =
+website.socialMedia.twitter =
+website.socialMedia.instagram =
+website.socialMedia.youtube =
+website.socialMedia.whatsapp =
 
 
 ###############################################

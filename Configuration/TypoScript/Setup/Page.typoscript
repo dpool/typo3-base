@@ -75,3 +75,6 @@ page {
         }
     }
 }
+
+### include schema org markup
+page.1503070436 < plugin.tx_base.schemaOrg.widgets.page

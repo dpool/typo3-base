@@ -1,0 +1,47 @@
+plugin.tx_base.settings {
+    schemaOrgMarkup {
+        # context is not required
+        # Find other types on:
+        # http://schema.org/LocalBusiness
+        type = Organization
+        name = {$website.company.name}
+        url = {$website.baseURL}
+        telephone = {$website.company.telephone}
+        image {
+            type = ImageObject
+            url = {$website.company.logo}
+            caption = {$website.company.name}
+        }
+        address {
+            type = PostalAddress
+            streetAddress = {$website.company.address.streetAddress}
+            addressLocality = {$website.company.address.addressLocality}
+            postalCode = {$website.company.address.postalCode}
+        }
+        # Contact
+        contactPoint {
+            type = ContactPoint
+            telephone = {$website.company.telephone}
+            # contact types for phone numbers:
+            # https://developers.google.com/search/docs/data-types/corporate-contacts
+            contactType = customer service
+        }
+        # social Media comma seperated
+        sameAs {
+            # Simply add multiple pages divided by comma
+            #                ARRAY = https://twitter.com/codingms,https://www.instagram.com/codingms/
+            ARRAY = {$website.socialMedia.all}
+        }
+    }
+}
+
+plugin.tx_base.schemaOrg.widgets.page = USER
+plugin.tx_base.schemaOrg.widgets.page {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+    pluginKey = Schema
+    pluginName = Schema
+    extensionName = Base
+    vendorName = Dpool
+    controller = Schema
+    action = inject
+}
