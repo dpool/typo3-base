@@ -45,6 +45,9 @@ page {
         viewport {
             value = width=device-width,initial-scale=1,user-scalable=no
         }
+        robots = INDEX,FOLLOW
+        robots.override = NOINDEX,NOFOLLOW
+        robots.override.if.isTrue.field = no_search
     }
 
     bodyTag >
