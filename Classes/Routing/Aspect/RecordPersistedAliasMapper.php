@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dpool\Base\Routing\Aspect;
 
 
-use TYPO3\CMS\Core\Database\ConnectioxnPool;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Routing\Aspect\PersistedAliasMapper;
 use TYPO3\CMS\Core\Site\SiteLanguageAwareTrait;
