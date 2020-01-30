@@ -53,7 +53,7 @@ build_frontend:
   dependencies:
     - composer
   before_script:
-    - cd .Build && npm update && cd -
+    - cd .Build && npm install && cd -
   script:
     - cd .Build && gulp build-production && cd -
   artifacts:
