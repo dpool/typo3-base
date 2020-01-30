@@ -18,7 +18,6 @@ cp public/typo3conf/ext/base/GitlabCI/Gulp/package.json package.json
 
 echo "copy the git-pull.sh file to the project root directory"
 cp public/typo3conf/ext/base/GitlabCI/Scaffolding/git-pull.sh git-pull.sh
-cp public/typo3conf/ext/base/GitlabCI/Scaffolding/update.sh update.sh
 
 echo "copy empty files for customising of CI/CD processes in an individual project"
 cp public/typo3conf/ext/base/GitlabCI/Scaffolding/after-composer.sh gitlab-ci-scripts/after-composer.sh
@@ -28,7 +27,6 @@ cp public/typo3conf/ext/base/GitlabCI/Scaffolding/rsync-build-excludes.txt gitla
 cp public/typo3conf/ext/base/GitlabCI/Scaffolding/rsync-deploy-excludes.txt gitlab-ci-scripts/rsync-deploy-excludes.txt
 
 echo "build website extension if not exist"
-
 cp -R public/typo3conf/ext/base/GitlabCI/Scaffolding-Ext/* public/typo3conf/ext/
 
 echo "copy gulp-file infrastructure"

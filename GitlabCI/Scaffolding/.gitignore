@@ -2,7 +2,6 @@
 ._*
 .DS*
 .env
-package-lock.json
 FIRST_INSTALL
 
 node_modules

@@ -9,14 +9,14 @@ IFS='=' read -ra DEV_PATH <<< "$DEV_PATH"
 DEV_PATH=${DEV_PATH[1]}
 
 
-echo "2: update composer"
+echo "2: composer install"
 scp composer.json preview-bionic.dpool.net:$DEV_PATH
-ssh preview-bionic.dpool.net "cd $DEV_PATH && composer update"
+ssh preview-bionic.dpool.net "cd $DEV_PATH && composer install"
 
 
 echo "3: update dependencies"
 scp package.json preview-bionic.dpool.net:$DEV_PATH
-ssh preview-bionic.dpool.net "cd $DEV_PATH && npm update"
+ssh preview-bionic.dpool.net "cd $DEV_PATH && npm install"
 
 
 echo "4: copy the CI/CD yml configuration"
@@ -25,8 +25,6 @@ scp preview-bionic.dpool.net:"$DEV_PATH"public/typo3conf/ext/base/GitlabCI/.gitl
 echo "5: copy gulp setup"
 scp preview-bionic.dpool.net:"$DEV_PATH"public/typo3conf/ext/base/GitlabCI/Gulp/Gulpfile.js Gulpfile.js
 
-echo "6: copy git-pull script"
-scp preview-bionic.dpool.net:"$DEV_PATH"public/typo3conf/ext/base/GitlabCI/Scaffolding/git-pull.sh git-pull.sh
 
 
 echo "Script wartet jetzt 15 Sekunden, um den Upload durch PHP-Storm abzuwarten"
