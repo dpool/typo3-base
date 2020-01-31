@@ -34,6 +34,8 @@ composer:
       --exclude=/composer.json
       --exclude=/composer.lock
       --exclude=/composer.phar
+      --exclude=/git-pull.sh
+      --exclude=/Patches
       --exclude-from=gitlab-ci-scripts/rsync-build-excludes.txt
     - if [ -f ./gitlab-ci-scripts/after-composer.sh ]; then cd .Build && ../gitlab-ci-scripts/after-composer.sh && cd -; fi
   artifacts:
@@ -134,12 +136,16 @@ install:
     - >
       rsync -az -e "ssh -p $SSH_PORT" --delete
       --exclude=/gitlab-ci-scripts
-      --exclude=/public/.htaccess.*
       --exclude=/var
       --exclude=.git
       --exclude=.gitattributes
       --exclude=.gitignore
+      --exclude=/public/.htaccess.*
       --exclude=/public/.htpasswd
+      --exclude=/gulp-config.js
+      --exclude=/Gulpfile.js
+      --exclude=/package.json
+      --exclude=/package-lock.json
       --exclude=*.md
       --exclude-from=gitlab-ci-scripts/rsync-deploy-excludes.txt
       .Build/ $SSH_USERNAME@$SSH_HOST:$SSH_REMOTE_PATH
@@ -202,10 +208,12 @@ install:
       --exclude=/public/uploads
       --exclude=/public/.htaccess
       --exclude=/public/.htpasswd
+      --exclude=/public/.htpasswd.mittwald
       --exclude=/var
-      --exclude=.git
-      --exclude=.gitattributes
-      --exclude=.gitignore
+      --exclude=/gulp-config.js
+      --exclude=/Gulpfile.js
+      --exclude=/package.json
+      --exclude=/package-lock.json
       --exclude=*.md
       --exclude-from=gitlab-ci-scripts/rsync-deploy-excludes.txt
       .Build/ $SSH_USERNAME@$SSH_HOST:$SSH_REMOTE_PATH
@@ -228,6 +236,10 @@ deploy_test:
   only:
     - test
   when: always
+  dependencies:
+    - composer
+    - build_frontend
+    - build_typo3
 
 
 deploy_production:
@@ -235,3 +247,7 @@ deploy_production:
   only:
     - production
   when: manual
+  dependencies:
+    - composer
+    - build_frontend
+    - build_typo3
