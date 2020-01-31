@@ -1,0 +1,239 @@
+From af8791f103825eaa345f90a41c81d8faa82ac73f Mon Sep 17 00:00:00 2001
+From: Helmut Hummel <typo3@helhum.io>
+Date: Fri, 30 Aug 2019 13:58:22 +0200
+Subject: [PATCH] [WIP][BUGFIX] Respect site for persisted alias mapper
+
+Resolves: #88720
+Releases: 9.5, master
+Change-Id: I469d7b853f75eec09463bb809b795c4732753cff
+---
+
+diff --git a/typo3/sysext/core/Classes/Routing/Aspect/AspectFactory.php b/typo3/sysext/core/Classes/Routing/Aspect/AspectFactory.php
+index 0c9c58a..de6cc43 100644
+--- a/typo3/sysext/core/Classes/Routing/Aspect/AspectFactory.php
++++ b/typo3/sysext/core/Classes/Routing/Aspect/AspectFactory.php
+@@ -16,7 +16,9 @@
+  * The TYPO3 project - inspiring people to share!
+  */
+
++use TYPO3\CMS\Core\Site\Entity\Site;
+ use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
++use TYPO3\CMS\Core\Site\SiteAwareTrait;
+ use TYPO3\CMS\Core\Site\SiteLanguageAwareTrait;
+ use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+@@ -31,11 +33,17 @@
+     protected $availableAspects;
+
+     /**
++     * @var Site
++     */
++    protected $site;
++
++    /**
+      * AspectFactory constructor.
+      */
+-    public function __construct()
++    public function __construct(Site $site)
+     {
+         $this->availableAspects = $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects'] ?? [];
++        $this->site = $site;
+     }
+
+     /**
+@@ -102,6 +110,10 @@
+             /** @var $aspect SiteLanguageAwareTrait */
+             $aspect->setSiteLanguage($language);
+         }
++        if (in_array(SiteAwareTrait::class, class_uses($aspect), true)) {
++            /** @var $aspect SiteAwareTrait */
++            $aspect->setSite($this->site);
++        }
+         return $aspect;
+     }
+
+diff --git a/typo3/sysext/core/Classes/Routing/Aspect/PersistedAliasMapper.php b/typo3/sysext/core/Classes/Routing/Aspect/PersistedAliasMapper.php
+index 9f07560..30ff01c 100644
+--- a/typo3/sysext/core/Classes/Routing/Aspect/PersistedAliasMapper.php
++++ b/typo3/sysext/core/Classes/Routing/Aspect/PersistedAliasMapper.php
+@@ -20,6 +20,7 @@
+ use TYPO3\CMS\Core\Context\LanguageAspectFactory;
+ use TYPO3\CMS\Core\Database\ConnectionPool;
+ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
++use TYPO3\CMS\Core\Site\SiteAwareTrait;
+ use TYPO3\CMS\Core\Site\SiteLanguageAwareTrait;
+ use TYPO3\CMS\Core\Utility\GeneralUtility;
+ use TYPO3\CMS\Frontend\Page\PageRepository;
+@@ -46,6 +47,7 @@
+ class PersistedAliasMapper implements PersistedMappableAspectInterface, StaticMappableAspectInterface
+ {
+     use SiteLanguageAwareTrait;
++    use SiteAwareTrait;
+
+     /**
+      * @var array
+@@ -204,10 +206,18 @@
+             );
+         };
+
++        $site = null;
++        if ($GLOBALS['TCA'][$this->tableName]['columns'][$this->routeFieldName]['config']['type'] === 'slug'
++            && $GLOBALS['TCA'][$this->tableName]['columns'][$this->routeFieldName]['config']['eval'] === 'uniqueInSite'
++        ) {
++            $site = $this->site;
++        }
++
+         return $this->persistenceDelegate = new PersistenceDelegate(
+             $queryBuilder,
+             $resolveModifier,
+-            $generateModifier
++            $generateModifier,
++            $site
+         );
+     }
+
+diff --git a/typo3/sysext/core/Classes/Routing/Aspect/PersistenceDelegate.php b/typo3/sysext/core/Classes/Routing/Aspect/PersistenceDelegate.php
+index a0feffe..a1c41bd 100644
+--- a/typo3/sysext/core/Classes/Routing/Aspect/PersistenceDelegate.php
++++ b/typo3/sysext/core/Classes/Routing/Aspect/PersistenceDelegate.php
+@@ -16,7 +16,12 @@
+  * The TYPO3 project - inspiring people to share!
+  */
+
++use Doctrine\DBAL\Driver\Statement;
+ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
++use TYPO3\CMS\Core\Exception\SiteNotFoundException;
++use TYPO3\CMS\Core\Routing\SiteMatcher;
++use TYPO3\CMS\Core\Site\Entity\Site;
++use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+ /**
+  * Delegate implementation in order to retrieve and generate values
+@@ -40,15 +45,22 @@
+     protected $generateModifier;
+
+     /**
++     * @var ?Site
++     */
++    protected $site;
++
++    /**
+      * @param QueryBuilder $queryBuilder
+      * @param \Closure $resolveModifier
+      * @param \Closure $generateModifier
++     * @param Site $site
+      */
+-    public function __construct(QueryBuilder $queryBuilder, \Closure $resolveModifier, \Closure $generateModifier)
++    public function __construct(QueryBuilder $queryBuilder, \Closure $resolveModifier, \Closure $generateModifier, Site $site = null)
+     {
+         $this->queryBuilder = $queryBuilder;
+         $this->resolveModifier = $resolveModifier;
+         $this->generateModifier = $generateModifier;
++        $this->site = $site;
+     }
+
+     /**
+@@ -69,10 +81,7 @@
+     public function resolve(array $values): ?array
+     {
+         $this->applyValueModifier($this->resolveModifier, $values);
+-        $result = $this->queryBuilder
+-            ->execute()
+-            ->fetch();
+-        return $result !== false ? $result : null;
++        return $this->limitToSite($this->queryBuilder->execute());
+     }
+
+     /**
+@@ -81,10 +90,21 @@
+     public function generate(array $values): ?array
+     {
+         $this->applyValueModifier($this->generateModifier, $values);
+-        $result = $this->queryBuilder
+-            ->execute()
+-            ->fetch();
+-        return $result !== false ? $result : null;
++        return $this->limitToSite($this->queryBuilder->execute());
++    }
++
++    private function limitToSite(Statement $statement): ?array
++    {
++        $siteMatcher = GeneralUtility::makeInstance(SiteMatcher::class);
++        while ($row = $statement->fetch()) {
++            try {
++                if ($this->site === null || $siteMatcher->matchByPageId((int)$row['pid'])->getRootPageId() === $this->site->getRootPageId()) {
++                    return $row;
++                }
++            } catch (SiteNotFoundException $e) {
++            }
++        }
++        return null;
+     }
+
+     /**
+diff --git a/typo3/sysext/core/Classes/Routing/PageRouter.php b/typo3/sysext/core/Classes/Routing/PageRouter.php
+index ecc1278..ec4a542 100644
+--- a/typo3/sysext/core/Classes/Routing/PageRouter.php
++++ b/typo3/sysext/core/Classes/Routing/PageRouter.php
+@@ -100,7 +100,7 @@
+     {
+         $this->site = $site;
+         $this->enhancerFactory = GeneralUtility::makeInstance(EnhancerFactory::class);
+-        $this->aspectFactory = GeneralUtility::makeInstance(AspectFactory::class);
++        $this->aspectFactory = GeneralUtility::makeInstance(AspectFactory::class, $site);
+         $this->cacheHashCalculator = GeneralUtility::makeInstance(CacheHashCalculator::class);
+     }
+
+diff --git a/typo3/sysext/core/Classes/Site/SiteAwareTrait.php b/typo3/sysext/core/Classes/Site/SiteAwareTrait.php
+new file mode 100644
+index 0000000..ae3a844
+--- /dev/null
++++ b/typo3/sysext/core/Classes/Site/SiteAwareTrait.php
+@@ -0,0 +1,46 @@
++<?php
++declare(strict_types = 1);
++
++namespace TYPO3\CMS\Core\Site;
++
++/*
++ * This file is part of the TYPO3 CMS project.
++ *
++ * It is free software; you can redistribute it and/or modify it under
++ * the terms of the GNU General Public License, either version 2
++ * of the License, or any later version.
++ *
++ * For the full copyright and license information, please read the
++ * LICENSE.txt file that was distributed with this source code.
++ *
++ * The TYPO3 project - inspiring people to share!
++ */
++
++/**
++ * Helper trait to use a site within a class.
++ *
++ * @internal this is not public API yet as this might change, and could be changed within TYPO3 Core at any time.
++ */
++trait SiteAwareTrait
++{
++    /**
++     * @var Entity\Site
++     */
++    protected $site;
++
++    /**
++     * @param Entity\SiteLanguage $siteLanguage
++     */
++    public function setSite(Entity\Site $site)
++    {
++        $this->site = $site;
++    }
++
++    /**
++     * @return Entity\SiteLanguage
++     */
++    public function getSite(): Entity\Site
++    {
++        return $this->site;
++    }
++}
+
