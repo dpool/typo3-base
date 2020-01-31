@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Routing\Aspect\PersistedAliasMapper;
 use TYPO3\CMS\Core\Site\SiteLanguageAwareTrait;
+use TYPO3\CMS\Core\Site\SiteAwareTrait;
 use TYPO3\CMS\Core\Routing\Aspect\PersistenceDelegate;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
@@ -17,6 +18,7 @@ use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 class RecordPersistedAliasMapper extends PersistedAliasMapper
 {
     use SiteLanguageAwareTrait;
+    use SiteAwareTrait;
 
     /**
      * @var bool
@@ -60,17 +62,25 @@ class RecordPersistedAliasMapper extends PersistedAliasMapper
                 ...$this->createFieldConstraints($queryBuilder, $values)
             );
         };
-        
+
         $generateModifier = function (QueryBuilder $queryBuilder, array $values) {
             return $queryBuilder->select(...$this->persistenceFieldNames)->where(
                 ...$this->createFieldConstraints($queryBuilder, $values)
             );
         };
 
+        $site = null;
+        if ($GLOBALS['TCA'][$this->tableName]['columns'][$this->routeFieldName]['config']['type'] === 'slug'
+            && $GLOBALS['TCA'][$this->tableName]['columns'][$this->routeFieldName]['config']['eval'] === 'uniqueInSite'
+        ) {
+            $site = $this->site;
+        }
+
         return $this->persistenceDelegate = new PersistenceDelegate(
             $queryBuilder,
             $resolveModifier,
-            $generateModifier
+            $generateModifier,
+            $site
         );
 
     }
