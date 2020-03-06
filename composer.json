@@ -5,8 +5,7 @@
 
 	"require": {
 		"php": "7.2",
-		"helhum/dotenv-connector": "^2",
-		"helhum/typo3-console": "^5"
+		"helhum/dotenv-connector": "^2"
 	},
 	"autoload": {
 		"psr-4": {
