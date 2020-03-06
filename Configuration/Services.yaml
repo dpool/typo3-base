@@ -1,0 +1,7 @@
+services:
+  Dpool\Base\EventListener\ToolbarItemProvider:
+    tags:
+      - name: event.listener
+        identifier: 'dpool/show-git-reference-in-toolbar'
+        method: 'getItem'
+        event: TYPO3\CMS\Backend\Backend\Event\SystemInformationToolbarCollectorEvent

@@ -14,7 +14,6 @@ class ConfigLoader
     {
         $this->loadDatabaseCredentials();
         $this->loadAdditionalConfigurationValues();
-        $this->registerSlots();
     }
 
     protected function loadDatabaseCredentials()
@@ -57,16 +56,6 @@ class ConfigLoader
             '[%s] %s',
             getenv('ENVNAME'),
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename']
-        );
-    }
-
-    protected function registerSlots()
-    {
-        GeneralUtility::makeInstance(Dispatcher::class)->connect(
-            SystemInformationToolbarItem::class,
-            'getSystemInformation',
-            SystemInformationToolbarSlot::class,
-            'addItems'
         );
     }
 }
