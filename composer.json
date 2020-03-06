@@ -4,7 +4,7 @@
 	"description": "Dpool base extension, based on extbase & fluid for TYPO3 CMS",
 
 	"require": {
-		"php": "7.2",
+		"php": "^7.2",
 		"helhum/dotenv-connector": "^2"
 	},
 	"autoload": {
