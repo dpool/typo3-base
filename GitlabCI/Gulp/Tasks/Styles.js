@@ -29,12 +29,11 @@ gulp.task('styles', function () {
         .pipe(sass(config.sassOptions).on('error', sass.logError))
         .pipe(autoprefixer())
         .pipe(gulp.dest(config.cssOutputDist))
-        .pipe(touch())
         .pipe(rename({
             suffix: '.min'
         }))
         .pipe(cleanCSS())
+        .pipe(touch())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(config.cssOutputDist))
-        .pipe(touch());
+        .pipe(gulp.dest(config.cssOutputDist));
 });
