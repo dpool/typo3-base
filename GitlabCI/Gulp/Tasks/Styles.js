@@ -12,6 +12,7 @@ var cleanCSS = require('gulp-clean-css');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
+var touch = require('gulp-touch-cmd');
 
 var config = require('../../../../../../../gulp-config');
 
@@ -32,6 +33,7 @@ gulp.task('styles', function () {
             suffix: '.min'
         }))
         .pipe(cleanCSS())
+        .pipe(touch())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(config.cssOutputDist));
 });
