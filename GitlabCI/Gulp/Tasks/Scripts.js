@@ -26,10 +26,9 @@ gulp.task('scripts', function () {
         .pipe(sourcemaps.init())
         .pipe(concat(config.jsOutputFile))
         .pipe( gulp.dest(config.jsOutputDist))
-        .pipe(touch())
         .pipe(rename(config.jsOutputFileMin))
         .pipe(uglify())
+        .pipe(touch())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(config.jsOutputDist))
-        .pipe(touch());
+        .pipe(gulp.dest(config.jsOutputDist));
 });
