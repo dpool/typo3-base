@@ -10,6 +10,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
+var touch = require('gulp-touch-cmd');
 
 var config = require('../../../../../../../gulp-config');
 
@@ -25,8 +26,10 @@ gulp.task('scripts', function () {
         .pipe(sourcemaps.init())
         .pipe(concat(config.jsOutputFile))
         .pipe( gulp.dest(config.jsOutputDist))
+        .pipe(touch())
         .pipe(rename(config.jsOutputFileMin))
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(config.jsOutputDist));
+        .pipe(gulp.dest(config.jsOutputDist))
+        .pipe(touch());
 });
