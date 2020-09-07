@@ -12,6 +12,7 @@ var cleanCSS = require('gulp-clean-css');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
+var livereload = require('gulp-livereload');
 
 var config = require('../../../../../../../gulp-config');
 
@@ -33,5 +34,6 @@ gulp.task('styles', function () {
         }))
         .pipe(cleanCSS())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(config.cssOutputDist));
+        .pipe(gulp.dest(config.cssOutputDist))
+        .pipe(livereload());
 });

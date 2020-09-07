@@ -9,6 +9,8 @@ var gulp = require('gulp');
 
 var config = require('../../../../../../../gulp-config');
 
+var livereload = require('gulp-livereload');
+
 
 /*
 ########################################################################################################################################################################################################
@@ -16,6 +18,7 @@ var config = require('../../../../../../../gulp-config');
 ########################################################################################################################################################################################################
 */
 gulp.task('watch',function() {
+    livereload.listen();
     gulp.watch(config.cssInputFilesForWatcher, gulp.series('styles'));
     gulp.watch(config.jsInputFiles, gulp.series('scripts'));
 });
