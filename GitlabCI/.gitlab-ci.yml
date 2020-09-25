@@ -1,253 +1,102 @@
+image: dtools/dev:php7.2
+
 stages:
-  - composer
-  - build
+  - backend
+  - frontend
   - deploy
 
 composer:
-  tags:
-    - bionic
-  stage: composer
+  tags: [docker]
+  stage: backend
   only:
     - test
     - production
-  before_script:
+  script:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
-    - mkdir -p ~/.ssh
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - mkdir .Build
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=./ --filename=composer.phar
     - export COMPOSER_ALLOW_SUPERUSER=1
-    - export COMPOSER_CACHE_DIR=/home/gitlab-runner/composer/cache
     - export COMPOSER_MIRROR_PATH_REPOS=1
     - export COMPOSER_NO_INTERACTION=1
-  script:
     - ./composer.phar install --no-dev --prefer-dist --optimize-autoloader
     - ./composer.phar dumpautoload --optimize
-    - mkdir -p gitlab-ci-scripts && touch gitlab-ci-scripts/rsync-build-excludes.txt
     - >
-      rsync -a ./ .Build/
-      --exclude=/.Build
-      --exclude=/.git
-      --exclude=/.idea
-      --exclude=/.gitlab-ci.yml
-      --exclude=/composer.json
-      --exclude=/composer.lock
-      --exclude=/composer.phar
-      --exclude=/git-pull.sh
-      --exclude=/Patches
-      --exclude-from=gitlab-ci-scripts/rsync-build-excludes.txt
-    - if [ -f ./gitlab-ci-scripts/after-composer.sh ]; then cd .Build && ../gitlab-ci-scripts/after-composer.sh && cd -; fi
+      rsync -rlp ./ .Build/
+      --exclude-from=public/typo3conf/ext/base/GitlabCI/build-rsync-excludes.txt
   artifacts:
     expire_in: 60 minutes
     paths:
       - .Build
 
-build_frontend:
-  tags:
-    - bionic
-  stage: build
+npm:
+  tags: [docker]
+  stage: frontend
   only:
     - test
     - production
-  variables:
-    NODE_ENV: production
   dependencies:
     - composer
-  before_script:
-    - cd .Build && npm install && cd -
   script:
-    - cd .Build && gulp build-production && cd -
+    - cp package.json .Build/
+    - cp package-lock.json .Build/
+    - cp Gulpfile.js .Build/
+    - cp gulp-config.js .Build/
+    - cd .Build && npm install && cd -
+    - cd .Build && npx gulp build-production && cd -
   artifacts:
     expire_in: 60 minutes
     paths:
       - .Build/public/typo3conf/ext/website/Resources/Public/JavaScript/
       - .Build/public/typo3conf/ext/website/Resources/Public/Stylesheets/
 
-
-build_typo3:
-  tags:
-    - bionic
-  stage: build
-  only:
-    - test
-    - production
-  script:
-    - BRANCH=$CI_BUILD_REF_NAME
-    - echo $'ENVNAME=\''$BRANCH$'\'' >> .Build/.env
-    - echo $'GIT_REFERENCE=\''$CI_BUILD_REF$'\'' >> .Build/.env
-    - DBNAME_VARIABLE=$BRANCH'_DBNAME'
-    - echo $'DBNAME=\''"${!DBNAME_VARIABLE-`echo $DBNAME`}"$'\'' >> .Build/.env
-    - DBUSER_VARIABLE=$BRANCH'_DBUSER'
-    - echo $'DBUSER=\''"${!DBUSER_VARIABLE-`echo $DBUSER`}"$'\'' >> .Build/.env
-    - DBPASS_VARIABLE=$BRANCH'_DBPASS'
-    - echo $'DBPASS=\''"${!DBPASS_VARIABLE-`echo $DBPASS`}"$'\'' >> .Build/.env
-    - DBHOST_VARIABLE=$BRANCH'_DBHOST'
-    - echo $'DBHOST=\''"${!DBHOST_VARIABLE-`echo $DBHOST`}"$'\'' >> .Build/.env
-    - IM_PATH_VARIABLE=$BRANCH'_IM_PATH'
-    - echo $'IM_PATH=\''"${!IM_PATH_VARIABLE-`echo $IM_PATH`}"$'\'' >> .Build/.env
-    - ENCRYPTION_KEY_VARIABLE=$BRANCH'_ENCRYPTION_KEY'
-    - echo $'ENCRYPTION_KEY=\''"${!ENCRYPTION_KEY_VARIABLE-`echo $ENCRYPTION_KEY`}"$'\'' >> .Build/.env
-    - INSTALL_TOOL_PASSWORD_VARIABLE=$BRANCH'_INSTALL_TOOL_PASSWORD'
-    - echo $'INSTALL_TOOL_PASSWORD=\''"${!INSTALL_TOOL_PASSWORD_VARIABLE-`echo $INSTALL_TOOL_PASSWORD`}"$'\'' >> .Build/.env
-  dependencies:
-    - composer
-  artifacts:
-    expire_in: 60 minutes
-    paths:
-      - .Build/.env
-
-install:
-  tags:
-    - bionic
-  stage: deploy
-  only:
-    - test
-    - production
-  when: manual
-  dependencies:
-    - composer
-    - build_frontend
-    - build_typo3
-  environment: $CI_BUILD_REF_NAME
-  before_script:
-    - eval $(ssh-agent -s)
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
-    - mkdir -p ~/.ssh
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-  script:
-    - BRANCH=$CI_BUILD_REF_NAME
-    - SSH_HOST_VARIABLE=$BRANCH'_SSH_HOST'
-    - SSH_HOST="${!SSH_HOST_VARIABLE-`echo $SSH_HOST`}"
-    - if [ -z "$SSH_HOST" ]; then echo $BRANCH' is not deployed because there is no SSH_HOST variable configured.' && exit 0; fi
-    - SSH_PORT_VARIABLE=$BRANCH'_SSH_PORT'
-    - SSH_PORT="${!SSH_PORT_VARIABLE-`echo $SSH_PORT`}"
-    - SSH_PORT="${SSH_PORT:-22}"
-    - SSH_USERNAME_VARIABLE=$BRANCH'_SSH_USERNAME'
-    - SSH_USERNAME="${!SSH_USERNAME_VARIABLE-`echo $SSH_USERNAME`}"
-
-    - SSH_REMOTE_PATH_VARIABLE=$BRANCH'_SSH_REMOTE_PATH'
-    - SSH_REMOTE_PATH=${!SSH_REMOTE_PATH_VARIABLE-`echo $SSH_REMOTE_PATH`}
-    - if [ -z "$SSH_REMOTE_PATH" ]; then echo $BRANCH' is not deployed because there is no SSH_REMOTE_PATH variable configured.' && exit 0; fi
-
-    - if [ -f ./gitlab-ci-scripts/pre-deploy.sh ]; then cd .Build && ../gitlab-ci-scripts/pre-deploy.sh && cd -; fi
-
-    - mkdir -p gitlab-ci-scripts && touch gitlab-ci-scripts/rsync-deploy-excludes.txt
-    - >
-      rsync -az -e "ssh -p $SSH_PORT" --delete
-      --exclude=/gitlab-ci-scripts
-      --exclude=/var
-      --exclude=.git
-      --exclude=.gitattributes
-      --exclude=.gitignore
-      --exclude=/public/.htaccess.*
-      --exclude=/public/.htpasswd
-      --exclude=/gulp-config.js
-      --exclude=/Gulpfile.js
-      --exclude=/package.json
-      --exclude=/package-lock.json
-      --exclude=*.md
-      --exclude-from=gitlab-ci-scripts/rsync-deploy-excludes.txt
-      .Build/ $SSH_USERNAME@$SSH_HOST:$SSH_REMOTE_PATH
-
-    - PHP_BINARY_VARIABLE=$BRANCH'_PHP_BINARY'
-    - PHP_BINARY="${!PHP_BINARY_VARIABLE-`echo $PHP_BINARY`}"
-    - TYPO3_CONSOLE=$PHP_BINARY' '$SSH_REMOTE_PATH'vendor/bin/typo3cms'
-    - TYPO3_DB_NAME_VARIABLE=$BRANCH'_DBNAME'
-    - TYPO3_DB_NAME="${!TYPO3_DB_NAME_VARIABLE-`echo $DBNAME`}"
-    - >
-      ssh -p $SSH_PORT $SSH_USERNAME@$SSH_HOST
-      'mysql -u '$DBUSER' -p'$DBPASS' -h '$DBHOST' -e "CREATE DATABASE \`'$TYPO3_DB_NAME'\` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"'
-    - >
-      ssh -p $SSH_PORT $SSH_USERNAME@$SSH_HOST
-      $TYPO3_CONSOLE' install:fixfolderstructure &&
-      '$TYPO3_CONSOLE' install:setup --no-interaction --force --use-existing-database --database-user-name="'$DBUSER'" --database-user-password="'$DBPASS'" --database-host-name="'$DBHOST'" --database-port=3306 --database-socket="" --database-name="'$TYPO3_DB_NAME'" --admin-user-name="'$BEUSER'" --admin-password="'$BEPASS'" --site-name="'$SITE_NAME'" --web-server-config=apache --site-setup-type=no'
-
-#https://stackoverflow.com/questions/47651769/gitlab-ci-run-build-job-when-manual-or-when-master-only?rq=1:
 .deploy_common: &deploy_common
-  tags:
-    - bionic
+  tags: [docker]
   stage: deploy
-  dependencies:
-    - composer
-    - build_frontend
-    - build_typo3
-  environment: $CI_BUILD_REF_NAME
-  before_script:
+  script:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
-    - mkdir -p ~/.ssh
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-  script:
-    - BRANCH=$CI_BUILD_REF_NAME
-    - SSH_HOST_VARIABLE=$BRANCH'_SSH_HOST'
-    - SSH_HOST="${!SSH_HOST_VARIABLE-`echo $SSH_HOST`}"
-    - if [ -z "$SSH_HOST" ]; then echo $BRANCH' is not deployed because there is no SSH_HOST variable configured.' && exit 0; fi
-    - SSH_PORT_VARIABLE=$BRANCH'_SSH_PORT'
-    - SSH_PORT="${!SSH_PORT_VARIABLE-`echo $SSH_PORT`}"
-    - SSH_PORT="${SSH_PORT:-22}"
-    - SSH_USERNAME_VARIABLE=$BRANCH'_SSH_USERNAME'
-    - SSH_USERNAME="${!SSH_USERNAME_VARIABLE-`echo $SSH_USERNAME`}"
-
-    - SSH_REMOTE_PATH_VARIABLE=$BRANCH'_SSH_REMOTE_PATH'
-    - SSH_REMOTE_PATH=${!SSH_REMOTE_PATH_VARIABLE-`echo $SSH_REMOTE_PATH`}
-    - if [ -z "$SSH_REMOTE_PATH" ]; then echo $BRANCH' is not deployed because there is no SSH_REMOTE_PATH variable configured.' && exit 0; fi
-
-    - if [ -f ./gitlab-ci-scripts/pre-deploy.sh ]; then cd .Build && ../gitlab-ci-scripts/pre-deploy.sh && cd -; fi
-
-    - mkdir -p gitlab-ci-scripts && touch gitlab-ci-scripts/rsync-deploy-excludes.txt
     - >
-      rsync -az -e "ssh -p $SSH_PORT" --delete
-      --exclude=/backups
-      --exclude=/gitlab-ci-scripts
-      --exclude=/public/.htaccess.*
-      --exclude=/public/fileadmin
-      --exclude=/public/typo3conf/LocalConfiguration.php
-      --exclude=/public/typo3conf/l10n
-      --exclude=/public/typo3temp
-      --exclude=/public/uploads
-      --exclude=/public/.htaccess
-      --exclude=/public/.htpasswd
-      --exclude=/public/.htpasswd.mittwald
-      --exclude=/var
-      --exclude=/gulp-config.js
-      --exclude=/Gulpfile.js
-      --exclude=/package.json
-      --exclude=/package-lock.json
-      --exclude=*.md
-      --exclude-from=gitlab-ci-scripts/rsync-deploy-excludes.txt
-      .Build/ $SSH_USERNAME@$SSH_HOST:$SSH_REMOTE_PATH
+      rsync -rlp -e "ssh -o StrictHostKeyChecking=no -p $SSH_PORT" --delete
+      --exclude-from=.Build/public/typo3conf/ext/base/GitlabCI/deploy-rsync-excludes.txt
+      --exclude=/public/spides
+      --exclude=/public/alltagshelden
+      .Build/ $SSH_LOGIN:$SSH_REMOTE_PATH
 
-    - PHP_BINARY_VARIABLE=$BRANCH'_PHP_BINARY'
-    - PHP_BINARY="${!PHP_BINARY_VARIABLE-`echo $PHP_BINARY`}"
-    - TYPO3_CONSOLE=$PHP_BINARY' '$SSH_REMOTE_PATH'vendor/bin/typo3cms'
+    - TYPO3_CONSOLE='php '$SSH_REMOTE_PATH'vendor/bin/typo3cms'
     - >
-      ssh -p $SSH_PORT $SSH_USERNAME@$SSH_HOST
-      $TYPO3_CONSOLE' install:fixfolderstructure &&
-      mkdir -p '$SSH_REMOTE_PATH'/backups/databases && '$TYPO3_CONSOLE' database:export | gzip > '$SSH_REMOTE_PATH'/backups/databases/beforedeploy.gz &&
+      ssh -p $SSH_PORT $SSH_LOGIN
+      $TYPO3_CONSOLE' database:export | gzip > '$SSH_REMOTE_PATH'/backups/databases/beforedeploy.gz &&
+      '$TYPO3_CONSOLE' cache:flush --files-only &&
       '$TYPO3_CONSOLE' database:updateschema "safe" &&
+      '$TYPO3_CONSOLE' install:generatepackagestates  &&
+      '$TYPO3_CONSOLE' install:fixfolderstructure &&
       '$TYPO3_CONSOLE' extension:setupactive &&
-      '$TYPO3_CONSOLE' upgrade:run all --no-interaction &&
       '$TYPO3_CONSOLE' database:updateschema "destructive" &&
-      '$TYPO3_CONSOLE' cache:flush --force'
+      '$TYPO3_CONSOLE' cache:flush'
 
 deploy_test:
   <<: *deploy_common
-  only:
-    - test
-  when: always
+  variables:
+    SSH_LOGIN: p523082@p523082.webspaceconfig.de
+    SSH_PORT: 22
+    SSH_REMOTE_PATH: /home/www/p523082/html/test/
   dependencies:
     - composer
-    - build_frontend
-    - build_typo3
-
+    - npm
+  only:
+    - test
+  when: manual
 
 deploy_production:
   <<: *deploy_common
+  variables:
+    SSH_LOGIN: p523082@p523082.webspaceconfig.de
+    SSH_PORT: 22
+    SSH_REMOTE_PATH: /home/www/p523082/html/production/
+  dependencies:
+    - composer
+    - npm
   only:
     - production
   when: manual
-  dependencies:
-    - composer
-    - build_frontend
-    - build_typo3
