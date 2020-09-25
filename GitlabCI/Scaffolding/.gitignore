@@ -5,9 +5,7 @@
 FIRST_INSTALL
 
 node_modules
-gitlab-ci-scripts
 Gulp
-typo3-gitlab-ci
 
 var/*
 vendor/*
