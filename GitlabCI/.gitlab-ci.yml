@@ -59,8 +59,6 @@ npm:
     - >
       rsync -rlp -e "ssh -o StrictHostKeyChecking=no -p $SSH_PORT" --delete
       --exclude-from=.Build/public/typo3conf/ext/base/GitlabCI/deploy-rsync-excludes.txt
-      --exclude=/public/spides
-      --exclude=/public/alltagshelden
       .Build/ $SSH_LOGIN:$SSH_REMOTE_PATH
 
     - TYPO3_CONSOLE='php '$SSH_REMOTE_PATH'vendor/bin/typo3cms'
@@ -78,9 +76,9 @@ npm:
 deploy_test:
   <<: *deploy_common
   variables:
-    SSH_LOGIN: p523082@p523082.webspaceconfig.de
+    SSH_LOGIN: xxx@xxx
     SSH_PORT: 22
-    SSH_REMOTE_PATH: /home/www/p523082/html/test/
+    SSH_REMOTE_PATH: /xxx/
   dependencies:
     - composer
     - npm
@@ -91,9 +89,9 @@ deploy_test:
 deploy_production:
   <<: *deploy_common
   variables:
-    SSH_LOGIN: p523082@p523082.webspaceconfig.de
+    SSH_LOGIN: xxx@xxx
     SSH_PORT: 22
-    SSH_REMOTE_PATH: /home/www/p523082/html/production/
+    SSH_REMOTE_PATH: /xxx/
   dependencies:
     - composer
     - npm
