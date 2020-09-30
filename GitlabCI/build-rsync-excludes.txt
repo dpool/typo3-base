@@ -10,7 +10,7 @@
 /Gulpfile.js
 /gulp-config.js
 /git-pull.sh
-/syncmedia.sh
+/sync_media.sh
 /auth.json
 /Patches
 .gitignore
